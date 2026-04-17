@@ -78,6 +78,8 @@
     font-size: 1.4rem;
     transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s, background 0.3s, border-color 0.3s;
     overflow: hidden;
+    opacity: 0;
+    animation: entranceFromTopRight 0.75s cubic-bezier(.16,1,.3,1) 0.3s forwards;
   }
   body.light #theme-toggle {
     background: rgba(255,255,255,0.6);
@@ -130,39 +132,128 @@
 
 
 
-  /* Welcome screen */
-  #welcome-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    pointer-events: none;
+  /* ── Giriş Animasyonları ── */
+  @keyframes entranceFromLeft {
+    from { opacity: 0; transform: translateX(-110vw) scale(0.75) rotate(-6deg); }
+    to   { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
   }
-  #welcome-text {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 900;
-    background: linear-gradient(135deg, #b07fff 0%, #7ec8c8 50%, #c084fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-    animation: welcomeIn 0.8s cubic-bezier(.16,1,.3,1) forwards, welcomeOut 0.7s cubic-bezier(.7,0,.3,1) 1.8s forwards;
-    opacity: 0;
-    will-change: transform, opacity;
+  @keyframes entranceFromRight {
+    from { opacity: 0; transform: translateX(110vw) scale(0.75) rotate(6deg); }
+    to   { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
   }
-  @keyframes welcomeIn {
-    from { opacity: 0; transform: translateY(30px) scale(0.92); }
+  @keyframes entranceFromTop {
+    from { opacity: 0; transform: translateY(-110vh) scale(0.75) rotate(4deg); }
+    to   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  }
+  @keyframes entranceFromBottom {
+    from { opacity: 0; transform: translateY(110vh) scale(0.75) rotate(-4deg); }
+    to   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  }
+  @keyframes entranceFromTopRight {
+    from { opacity: 0; transform: translate(80px, -80px) scale(0.5) rotate(20deg); }
+    to   { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+  @keyframes titleEntrance {
+    from { opacity: 0; transform: translateY(-30px) scale(0.88); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @keyframes welcomeOut {
-    from { opacity: 1; transform: scale(1); }
-    to   { opacity: 0; transform: scale(1.08); }
+
+  /* ── Kart Giriş Stilleri ── */
+  #card-instagram {
+    opacity: 0;
+    animation: entranceFromLeft 1s cubic-bezier(.16,1,.3,1) 0.3s forwards;
   }
-  #welcome-screen.done { display: none; }
+  #card-discord {
+    opacity: 0;
+    animation: entranceFromTop 1s cubic-bezier(.16,1,.3,1) 0.55s forwards;
+  }
+  #card-tiktok {
+    opacity: 0;
+    animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 0.8s forwards;
+  }
+  #card-spotify {
+    opacity: 0;
+    animation: entranceFromRight 1s cubic-bezier(.16,1,.3,1) 1.05s forwards;
+  }
+
+  /* ── Site Başlığı Girişi ── */
+  h1.site-title {
+    opacity: 0;
+    animation: titleEntrance 0.9s cubic-bezier(.16,1,.3,1) 0.15s forwards;
+  }
+
+  /* ── Bildirim (Hoş Geldiniz) ── */
+  #welcome-notif {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 600;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(12, 8, 26, 0.78);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+    padding: 0;
+    min-width: 210px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-90px) scale(0.86);
+    pointer-events: none;
+    box-shadow: 0 16px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(176,127,255,0.06);
+    animation: notifSlideIn 0.8s cubic-bezier(.16,1,.3,1) 2.2s forwards,
+               notifFadeOut 0.6s cubic-bezier(.7,0,.3,1) 5.0s forwards;
+  }
+  body.light #welcome-notif {
+    background: rgba(248,246,255,0.94);
+    border-color: rgba(130,80,220,0.14);
+    box-shadow: 0 16px 56px rgba(70,30,180,0.14), 0 0 0 1px rgba(130,80,220,0.07);
+  }
+  @keyframes notifSlideIn {
+    0%   { opacity: 0; transform: translateY(-90px) scale(0.86); }
+    50%  { opacity: 1; transform: translateY(5px) scale(1.01); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes notifFadeOut {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(-80px) scale(0.84); }
+  }
+  /* Sol aksan çizgisi */
+  .notif-accent {
+    width: 3px;
+    background: linear-gradient(180deg, #b07fff 0%, #7ec8c8 100%);
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+  body.light .notif-accent {
+    background: linear-gradient(180deg, #7b3ff2 0%, #0a7070 100%);
+  }
+  .notif-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 18px;
+  }
+  .notif-app-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: rgba(176,127,255,0.75);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  body.light .notif-app-name { color: rgba(100,40,200,0.65); }
+  .notif-message {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  body.light .notif-message { color: rgba(15,8,45,0.88); }
 
   /* Main content */
   #main {
@@ -175,12 +266,6 @@
     justify-content: center;
     gap: 20px;
     padding: 40px 20px;
-    opacity: 0;
-    animation: mainIn 1s cubic-bezier(.16,1,.3,1) 2.7s forwards;
-  }
-  @keyframes mainIn {
-    0%   { opacity: 0; transform: translateY(32px) scale(0.97); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   h1.site-title {
@@ -623,6 +708,74 @@
     .go-btn { font-size: 0.68rem; padding: 9px 10px; }
   }
 
+  /* ── Animasyon süresince kart hover efektleri kapalı ── */
+  body.cards-locked .card:hover {
+    transform: none !important;
+    box-shadow: var(--shadow) !important;
+    border-color: var(--border) !important;
+  }
+  body.cards-locked .card:hover::before { opacity: 0 !important; }
+  body.cards-locked .card:hover::after  { animation: none !important; }
+  body.cards-locked .card:hover .logo-wrap { animation: none !important; box-shadow: none !important; }
+  body.cards-locked .card:hover .card-name { animation: none !important; }
+  body.cards-locked .card:hover .go-btn    { transform: none !important; }
+
+  /* ── Buton Kilit Stili (glow bitmeden tıklanamaz) ── */
+  .go-btn.btn-locked {
+    pointer-events: none;
+    opacity: 0.38;
+    cursor: not-allowed;
+    filter: grayscale(0.4);
+  }
+
+  /* ── Buton Açılış Zıplama Animasyonu ── */
+  @keyframes btnUnlock {
+    0%   { transform: scale(1);    opacity: 0.38; filter: grayscale(0.4); }
+    45%  { transform: scale(1.13); opacity: 1;    filter: grayscale(0); }
+    68%  { transform: scale(0.95); }
+    85%  { transform: scale(1.05); }
+    100% { transform: scale(1);    opacity: 1;    filter: grayscale(0); }
+  }
+  .go-btn.btn-unlocking {
+    animation: btnUnlock 0.85s cubic-bezier(.34,1.4,.64,1) forwards;
+    pointer-events: none;
+  }
+
+  /* ── Intro Glow Dalgası: Hover ile birebir aynı efekt ── */
+  .card.intro-glow {
+    transform: translateY(-10px) scale(1.03) !important;
+  }
+  .card.intro-glow::before { opacity: 1 !important; }
+
+  .card-instagram.intro-glow {
+    box-shadow: 0 28px 70px rgba(245,133,41,0.55), 0 0 0 2px rgba(221,42,123,0.8), 0 0 40px rgba(221,42,123,0.2) !important;
+    border-color: rgba(221,42,123,0.5) !important;
+  }
+  .card-instagram.intro-glow .logo-wrap {
+    box-shadow: 0 0 0 4px rgba(221,42,123,0.3), 0 8px 24px rgba(245,133,41,0.5) !important;
+  }
+  .card-discord.intro-glow {
+    box-shadow: 0 28px 70px rgba(88,101,242,0.6), 0 0 0 2px rgba(88,101,242,0.8), 0 0 40px rgba(88,101,242,0.2) !important;
+    border-color: rgba(88,101,242,0.5) !important;
+  }
+  .card-discord.intro-glow .logo-wrap {
+    box-shadow: 0 0 0 4px rgba(88,101,242,0.35), 0 8px 24px rgba(88,101,242,0.5) !important;
+  }
+  .card-tiktok.intro-glow {
+    box-shadow: 0 28px 70px rgba(0,242,234,0.5), 0 0 0 2px rgba(0,242,234,0.75), 0 0 40px rgba(255,0,80,0.15) !important;
+    border-color: rgba(0,242,234,0.5) !important;
+  }
+  .card-tiktok.intro-glow .logo-wrap {
+    box-shadow: 0 0 0 4px rgba(0,242,234,0.3), 0 8px 24px rgba(255,0,80,0.4) !important;
+  }
+  .card-spotify.intro-glow {
+    box-shadow: 0 28px 70px rgba(30,215,96,0.55), 0 0 0 2px rgba(212,245,64,0.7), 0 0 40px rgba(30,215,96,0.2) !important;
+    border-color: rgba(29,185,84,0.5) !important;
+  }
+  .card-spotify.intro-glow .logo-wrap {
+    box-shadow: 0 0 0 4px rgba(29,185,84,0.35), 0 8px 24px rgba(212,245,64,0.4) !important;
+  }
+
   /* ── Soldan Sağa Işık Süpürmesi ── */
   #flash-overlay {
     position: fixed;
@@ -684,11 +837,6 @@
 
 
 
-<!-- Welcome screen -->
-<div id="welcome-screen">
-  <div id="welcome-text">Hoş Geldiniz</div>
-</div>
-
 <!-- White flash overlay -->
 <div id="flash-overlay"></div>
 
@@ -707,7 +855,7 @@
         </svg>
       </div>
       <span class="card-name">Instagram</span>
-      <button class="go-btn" id="instagram-btn" onclick="goToInstagram('https://www.instagram.com/isaa_blnkk17?igsh=MWhweDBkaWMwMDcyMA==')">Profil'e Git</button>
+      <button class="go-btn btn-locked" id="instagram-btn" onclick="goToInstagram('https://www.instagram.com/isaa_blnkk17?igsh=MWhweDBkaWMwMDcyMA==')">Profil'e Git</button>
     </div>
 
     <!-- Discord -->
@@ -718,7 +866,7 @@
         </svg>
       </div>
       <span class="card-name">Discord</span>
-      <button class="go-btn" id="discord-btn" onclick="goToDiscord('https://discord.com/users/1071457703446183957')">Profil'e Git</button>
+      <button class="go-btn btn-locked" id="discord-btn" onclick="goToDiscord('https://discord.com/users/1071457703446183957')">Profil'e Git</button>
     </div>
 
     <!-- TikTok -->
@@ -729,7 +877,7 @@
         </svg>
       </div>
       <span class="card-name">TikTok</span>
-      <button class="go-btn" id="tiktok-btn" onclick="goToTikTok('https://tiktok.com/@0xkiarika_x')">Profil'e Git</button>
+      <button class="go-btn btn-locked" id="tiktok-btn" onclick="goToTikTok('https://tiktok.com/@0xkiarika_x')">Profil'e Git</button>
     </div>
 
     <!-- Spotify -->
@@ -740,17 +888,15 @@
         </svg>
       </div>
       <span class="card-name">Spotify</span>
-      <button class="go-btn" id="spotify-btn" onclick="goToSpotify('https://open.spotify.com/user/31gs6rx6asncfn5qrgp6bvadyiwq?si=Dbg5FvPcT8eMfGp635CLmQ')">Profil'e Git</button>
+      <button class="go-btn btn-locked" id="spotify-btn" onclick="goToSpotify('https://open.spotify.com/user/31gs6rx6asncfn5qrgp6bvadyiwq?si=Dbg5FvPcT8eMfGp635CLmQ')">Profil'e Git</button>
     </div>
 
   </div><!-- /.cards -->
 </main><!-- /#main -->
 
 <script>
-  // Welcome screen dismiss after animation
-  setTimeout(() => {
-    document.getElementById('welcome-screen').classList.add('done');
-  }, 2600);
+  // ── Animasyon boyunca hover efektlerini kilitle ──
+  document.body.classList.add('cards-locked');
 
   // ── Gece/Gündüz Modu ──────────────────────────────
   const themeBtn = document.getElementById('theme-toggle');
@@ -760,6 +906,52 @@
   themeBtn.addEventListener('click', () => {
     document.body.classList.toggle('light');
     localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  });
+
+  // ── Soldan Sağa Glow Dalgası ──────────────────────────────
+  // Son kart ~2.05s'de yerleşir, 2.2s'de dalga başlar
+  const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify'];
+  const glowWaveStagger = 200; // ms kart arası gecikme
+  const glowWaveHold    = 500; // ms parlak kalma süresi
+
+  setTimeout(() => {
+    glowWaveOrder.forEach((id, i) => {
+      const card = document.getElementById('card-' + id);
+      card.style.opacity   = '1';
+      card.style.animation = 'none';
+
+      setTimeout(() => {
+        // Tam hover efektini CSS class ile uygula
+        card.classList.add('intro-glow');
+
+        setTimeout(() => {
+          card.classList.remove('intro-glow');
+        }, glowWaveHold);
+
+      }, i * glowWaveStagger);
+    });
+  }, 2200);
+
+  // ── Glow bittikten sonra butonları sırayla aç (soldan sağa) ──
+  // Son kart glowu: 2200 + 3*200 + 500 = 3300ms → +150ms buffer = 3450ms
+  const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify'];
+  const btnUnlockStagger = 200; // ms buton arası gecikme
+
+  btnUnlockOrder.forEach((id, i) => {
+    setTimeout(() => {
+      const btn = document.getElementById(id + '-btn');
+      // Kilit class'ını kaldır, zıplama animasyonunu başlat
+      btn.classList.remove('btn-locked');
+      btn.classList.add('btn-unlocking');
+      // Animasyon bitince unlocking class'ını temizle ve tıklamaya aç
+    setTimeout(() => {
+        btn.classList.remove('btn-unlocking');
+        // Son butonsa hover kilidini de kaldır
+        if (i === btnUnlockOrder.length - 1) {
+          document.body.classList.remove('cards-locked');
+        }
+      }, 880);
+    }, 3450 + i * btnUnlockStagger);
   });
 
   // ── Evrensel Kart Genişleme Animasyonu ──────────────────────
