@@ -709,6 +709,9 @@
   }
 
   /* ── Animasyon süresince kart hover efektleri kapalı ── */
+  body.cards-locked .card {
+    pointer-events: none;
+  }
   body.cards-locked .card:hover {
     transform: none !important;
     box-shadow: var(--shadow) !important;
