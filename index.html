@@ -37,15 +37,16 @@
   body.light .card-discord:hover   { box-shadow: 0 20px 60px rgba(88,101,242,0.5), 0 0 0 2px rgba(88,101,242,0.8); }
   body.light .card-tiktok:hover    { box-shadow: 0 20px 60px rgba(0,242,234,0.45), 0 0 0 2px rgba(0,242,234,0.75); }
   body.light .card-spotify:hover   { box-shadow: 0 20px 60px rgba(30,215,96,0.5),  0 0 0 2px rgba(29,185,84,0.8); }
+  body.light .card-facebook:hover  { box-shadow: 0 20px 60px rgba(24,119,242,0.5), 0 0 0 2px rgba(24,119,242,0.85); }
 
-  /* Light: tema butonu hover ışığı */
-  body.light #theme-toggle:hover { box-shadow: 0 20px 60px rgba(176,127,255,0.45), 0 0 0 2px rgba(176,127,255,0.9); border-color: rgba(176,127,255,0.8); }
+  /* Light mode hover glow (switcher) */
 
   /* Light: kart isim renkleri koyu ton */
   body.light .card-instagram .card-name { background: linear-gradient(90deg, #c9420a, #a01060, #c9420a, #a01060); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   body.light .card-discord   .card-name { background: linear-gradient(90deg, #3b4bbf, #5a6a8a, #3b4bbf, #5a6a8a); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   body.light .card-tiktok    .card-name { background: linear-gradient(90deg, #cc0040, #007a75, #cc0040, #007a75); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   body.light .card-spotify   .card-name { background: linear-gradient(90deg, #0d7a36, #8aa000, #0d7a36, #8aa000); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  body.light .card-facebook  .card-name { background: linear-gradient(90deg, #0a4fc4, #1877f2, #0a4fc4, #1877f2); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
   /* Light: site title */
   body.light h1.site-title {
@@ -58,51 +59,115 @@
   /* Light: particles daha belirgin */
   body.light #particles-js canvas { filter: invert(0) !important; }
 
-  /* ── Theme Toggle Button ── */
-  #theme-toggle {
+  /* ── Liquid Glass Theme Switcher ── */
+  /* ── Liquid Glass Switcher ── */
+  #theme-switcher {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 500;
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    border: 1.5px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s, background 0.3s, border-color 0.3s;
-    overflow: hidden;
     opacity: 0;
     animation: entranceFromTopRight 0.75s cubic-bezier(.16,1,.3,1) 0.3s forwards;
   }
-  body.light #theme-toggle {
-    background: rgba(255,255,255,0.6);
-    border-color: rgba(130,80,220,0.2);
-    box-shadow: 0 4px 24px rgba(100,60,200,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+
+  /* Pill: yassı, geniş, tam yuvarlak uçlar */
+  .glass-pill {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 4px;
+    border-radius: 100px;
+    background: #1c1b22;
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.65),
+                inset 0 1px 0 rgba(255,255,255,0.05),
+                inset 0 -1px 0 rgba(0,0,0,0.5);
+    gap: 0;
   }
-  #theme-toggle:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 20px 60px rgba(176,127,255,0.45), 0 0 0 2px rgba(176,127,255,0.9); border-color: rgba(176,127,255,0.8); }
-  #theme-toggle::after {
-    content: '';
+  body.light .glass-pill {
+    background: rgba(218,214,228,0.97);
+    border-color: rgba(155,140,185,0.22);
+    box-shadow: 4px 4px 12px rgba(145,125,175,0.3),
+               -3px -3px 8px rgba(255,255,255,0.92),
+                inset 0 1px 0 rgba(255,255,255,0.92);
+  }
+
+  .glass-pill input[type="radio"] { display: none; }
+
+  /* Slot — genişçe, kare değil dikdörtgen */
+  .glass-pill label {
+    position: relative;
+    z-index: 2;
+    width: 50px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 100px;
+    user-select: none;
+    transition: opacity 0.25s ease;
+    opacity: 0.28;
+  }
+  .glass-pill label:hover { opacity: 0.58; }
+  .glass-pill input:checked + label { opacity: 1; }
+
+  /* ── İkonlar: outline/stroke ── */
+  .glass-pill label svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: rgba(255,255,255,0.92);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.35s cubic-bezier(.16,1,.3,1),
+                stroke 0.3s ease,
+                filter 0.3s ease;
+  }
+  body.light .glass-pill label svg {
+    stroke: rgba(38,22,78,0.70);
+  }
+  .glass-pill label:hover svg { transform: scale(1.1); }
+  .glass-pill input:checked + label svg { transform: scale(1.05); }
+
+  /* Seçili sun → teal */
+  .glass-pill:has(#opt-light:checked) #opt-light + label svg {
+    stroke: #00d4c8;
+    filter: drop-shadow(0 0 5px rgba(0,210,200,0.72));
+  }
+  /* Hover: sun → teal ipucu */
+  .glass-pill label[for="opt-light"]:hover svg { stroke: #00d4c8; }
+
+  /* ── Glider: yuvarlak dikdörtgen, slottan biraz küçük ── */
+  .glass-glider {
     position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    opacity: 0;
-    background: linear-gradient(135deg, rgba(176,127,255,0.18), rgba(126,200,200,0.1));
-    transition: opacity 0.35s;
+    top: 4px;
+    left: 4px;
+    width: 50px;
+    height: 42px;
+    border-radius: 100px;
+    background: rgba(62, 59, 74, 0.97);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.11);
+    transition: transform 0.42s cubic-bezier(.16,1,.3,1);
+    z-index: 1;
     pointer-events: none;
   }
-  #theme-toggle:hover::after { opacity: 1; }
-  #theme-toggle .icon-sun, #theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.4s; }
-  #theme-toggle .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.6); }
-  #theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
-  body.light #theme-toggle .icon-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
-  body.light #theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+  body.light .glass-glider {
+    background: rgba(255,255,255,0.97);
+    border-color: rgba(175,155,210,0.28);
+    box-shadow: 0 2px 8px rgba(120,90,170,0.16),
+                inset 0 1px 0 rgba(255,255,255,1);
+  }
+
+  /* Glider konumları */
+  .glass-pill:has(#opt-light:checked)  .glass-glider { transform: translateX(0px); }
+  .glass-pill:has(#opt-dark:checked)   .glass-glider { transform: translateX(50px); }
+  .glass-pill:has(#opt-system:checked) .glass-glider { transform: translateX(100px); }
+
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -161,7 +226,7 @@
   /* ── Kart Giriş Stilleri ── */
   #card-instagram {
     opacity: 0;
-    animation: entranceFromLeft 1s cubic-bezier(.16,1,.3,1) 0.3s forwards;
+    animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 0.3s forwards;
   }
   #card-discord {
     opacity: 0;
@@ -173,7 +238,11 @@
   }
   #card-spotify {
     opacity: 0;
-    animation: entranceFromRight 1s cubic-bezier(.16,1,.3,1) 1.05s forwards;
+    animation: entranceFromTop 1s cubic-bezier(.16,1,.3,1) 1.05s forwards;
+  }
+  #card-facebook {
+    opacity: 0;
+    animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 1.3s forwards;
   }
 
   /* ── Site Başlığı Girişi ── */
@@ -358,11 +427,13 @@
   .card-discord   .card-name { background: linear-gradient(90deg, #7289da, #99aab5, #7289da, #99aab5); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-position: 0%; }
   .card-tiktok    .card-name { background: linear-gradient(90deg, #ff0050, #00f2ea, #ff0050, #00f2ea); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-position: 0%; }
   .card-spotify   .card-name { background: linear-gradient(90deg, #d4f540, #1DB954, #d4f540, #1DB954); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-position: 0%; }
+  .card-facebook  .card-name { background: linear-gradient(90deg, #1877f2, #42b0ff, #1877f2, #42b0ff); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-position: 0%; }
 
   .card-instagram:hover .card-name,
   .card-discord:hover   .card-name,
   .card-tiktok:hover    .card-name,
-  .card-spotify:hover   .card-name { animation: nameSlide 1.2s cubic-bezier(.16,1,.3,1) forwards; }
+  .card-spotify:hover   .card-name,
+  .card-facebook:hover  .card-name { animation: nameSlide 1.2s cubic-bezier(.16,1,.3,1) forwards; }
   @keyframes nameSlide {
     0%   { background-position: 0%; letter-spacing: 0.04em; }
     60%  { background-position: 180%; letter-spacing: 0.08em; }
@@ -375,6 +446,7 @@
   .card-discord   .go-btn { background: linear-gradient(135deg, #5865F2, #1a2060, #5865F2); background-size: 200%; }
   .card-tiktok    .go-btn { background: linear-gradient(135deg, #ff0050, #00f2ea, #ff0050); background-size: 200%; }
   .card-spotify   .go-btn { background: linear-gradient(135deg, #1DB954, #e8e000, #1DB954); background-size: 200%; }
+  .card-facebook  .go-btn { background: linear-gradient(135deg, #1877f2, #42b0ff, #1877f2); background-size: 200%; }
   .go-btn:hover { animation: btnShimmer 0.8s cubic-bezier(.16,1,.3,1) forwards; }
   @keyframes btnShimmer {
     0%   { background-position: 0% 50%;   filter: brightness(1)   saturate(1); transform: scale(1.1); }
@@ -395,6 +467,9 @@
 
   .card-spotify:hover { box-shadow: 0 28px 70px rgba(30,215,96,0.55), 0 0 0 2px rgba(212,245,64,0.7), 0 0 40px rgba(30,215,96,0.2); border-color: rgba(29,185,84,0.5); }
   .card-spotify::before { background: linear-gradient(135deg, rgba(30,215,96,0.15), rgba(212,245,64,0.13)); }
+
+  .card-facebook:hover { box-shadow: 0 28px 70px rgba(24,119,242,0.6), 0 0 0 2px rgba(24,119,242,0.85), 0 0 40px rgba(66,176,255,0.2); border-color: rgba(24,119,242,0.5); }
+  .card-facebook::before { background: linear-gradient(135deg, rgba(24,119,242,0.15), rgba(66,176,255,0.13)); }
 
   /* SVG logos */
   .logo-wrap {
@@ -422,12 +497,14 @@
   .logo-discord   { background: linear-gradient(135deg, #5865F2, #1a2060); }
   .logo-tiktok    { background: linear-gradient(135deg, #010101, #ff0050); }
   .logo-spotify   { background: linear-gradient(135deg, #1DB954, #e8e000); }
+  .logo-facebook  { background: linear-gradient(135deg, #1877f2, #0a4fc4); }
 
   /* Logo hover ışık halkası */
   .card-instagram:hover .logo-wrap { box-shadow: 0 0 0 4px rgba(221,42,123,0.3), 0 8px 24px rgba(245,133,41,0.5); }
   .card-discord:hover   .logo-wrap { box-shadow: 0 0 0 4px rgba(88,101,242,0.35), 0 8px 24px rgba(88,101,242,0.5); }
   .card-tiktok:hover    .logo-wrap { box-shadow: 0 0 0 4px rgba(0,242,234,0.3), 0 8px 24px rgba(255,0,80,0.4); }
   .card-spotify:hover   .logo-wrap { box-shadow: 0 0 0 4px rgba(29,185,84,0.35), 0 8px 24px rgba(212,245,64,0.4); }
+  .card-facebook:hover  .logo-wrap { box-shadow: 0 0 0 4px rgba(24,119,242,0.4), 0 8px 24px rgba(66,176,255,0.5); }
 
   .card-name {
     font-family: 'Playfair Display', serif;
@@ -478,12 +555,14 @@
   .card-discord   .go-btn { color: #d0d8ff; box-shadow: 0 4px 18px rgba(88,101,242,0.35); }
   .card-tiktok    .go-btn { color: #fff; box-shadow: 0 4px 18px rgba(255,0,80,0.3); }
   .card-spotify   .go-btn { color: #1a1a00; box-shadow: 0 4px 18px rgba(30,215,96,0.35); }
+  .card-facebook  .go-btn { color: #fff; box-shadow: 0 4px 18px rgba(24,119,242,0.4); }
 
   /* Hover'da buton glow */
   .card-instagram:hover .go-btn { box-shadow: 0 8px 28px rgba(221,42,123,0.55); }
   .card-discord:hover   .go-btn { box-shadow: 0 8px 28px rgba(88,101,242,0.55); }
   .card-tiktok:hover    .go-btn { box-shadow: 0 8px 28px rgba(255,0,80,0.5); }
   .card-spotify:hover   .go-btn { box-shadow: 0 8px 28px rgba(30,215,96,0.55); }
+  .card-facebook:hover  .go-btn { box-shadow: 0 8px 28px rgba(24,119,242,0.6); }
 
   /* ── Kart Çıkış Animasyonları ── */
   .card-exit-left  { will-change: transform, opacity; animation: exitLeft  0.55s cubic-bezier(.55,0,.1,1) forwards !important; }
@@ -778,6 +857,13 @@
   .card-spotify.intro-glow .logo-wrap {
     box-shadow: 0 0 0 4px rgba(29,185,84,0.35), 0 8px 24px rgba(212,245,64,0.4) !important;
   }
+  .card-facebook.intro-glow {
+    box-shadow: 0 28px 70px rgba(24,119,242,0.6), 0 0 0 2px rgba(24,119,242,0.85), 0 0 40px rgba(66,176,255,0.2) !important;
+    border-color: rgba(24,119,242,0.5) !important;
+  }
+  .card-facebook.intro-glow .logo-wrap {
+    box-shadow: 0 0 0 4px rgba(24,119,242,0.4), 0 8px 24px rgba(66,176,255,0.5) !important;
+  }
 
   /* ── Soldan Sağa Işık Süpürmesi ── */
   #flash-overlay {
@@ -824,11 +910,50 @@
 </head>
 <body>
 
-<!-- Theme Toggle -->
-<button id="theme-toggle" aria-label="Tema Değiştir">
-  <span class="icon-moon">🌙</span>
-  <span class="icon-sun">☀️</span>
-</button>
+<!-- Liquid Glass Theme Switcher -->
+<div id="theme-switcher" aria-label="Tema Değiştir">
+  <div class="glass-pill">
+    <!-- Light / Sun -->
+    <input type="radio" name="theme" id="opt-light" value="light">
+    <label for="opt-light" title="Açık Tema">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2"  x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22"  x2="6.34" y2="6.34"/>
+        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+        <line x1="2"  y1="12" x2="5"  y2="12"/>
+        <line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+        <line x1="17.66" y1="6.34"  x2="19.78" y2="4.22"/>
+      </svg>
+    </label>
+    <!-- Dark / Moon -->
+    <input type="radio" name="theme" id="opt-dark" value="dark" checked>
+    <label for="opt-dark" title="Koyu Tema">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none"/>
+      </svg>
+    </label>
+    <!-- System / Sunrise -->
+    <input type="radio" name="theme" id="opt-system" value="system">
+    <label for="opt-system" title="Sistem Teması">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="10" r="3"/>
+        <line x1="12" y1="2"  x2="12" y2="4"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="2"  y1="10" x2="4"  y2="10"/>
+        <line x1="20" y1="10" x2="22" y2="10"/>
+        <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"/>
+        <line x1="3" y1="15" x2="21" y2="15"/>
+        <polyline points="5 19 7.5 15" fill="none"/>
+        <polyline points="19 19 16.5 15" fill="none"/>
+        <line x1="5" y1="19" x2="19" y2="19"/>
+      </svg>
+    </label>
+    <div class="glass-glider"></div>
+  </div>
+</div>
 
 <!-- Background blobs -->
 <div class="blob blob1"></div>
@@ -894,6 +1019,17 @@
       <button class="go-btn btn-locked" id="spotify-btn" onclick="goToSpotify('https://open.spotify.com/user/31gs6rx6asncfn5qrgp6bvadyiwq?si=Dbg5FvPcT8eMfGp635CLmQ')">Profil'e Git</button>
     </div>
 
+    <!-- Facebook -->
+    <div class="card card-facebook" id="card-facebook">
+      <div class="logo-wrap logo-facebook">
+        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+        </svg>
+      </div>
+      <span class="card-name">Facebook</span>
+      <button class="go-btn btn-locked" id="facebook-btn" onclick="goToFacebook('https://www.facebook.com/isaa.blnk.0723')">Profil'e Git</button>
+    </div>
+
   </div><!-- /.cards -->
 </main><!-- /#main -->
 
@@ -901,19 +1037,45 @@
   // ── Animasyon boyunca hover efektlerini kilitle ──
   document.body.classList.add('cards-locked');
 
-  // ── Gece/Gündüz Modu ──────────────────────────────
-  const themeBtn = document.getElementById('theme-toggle');
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  if (savedTheme === 'light') document.body.classList.add('light');
+  // ── Liquid Glass Theme Switcher ──────────────────────
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  themeBtn.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  function applyTheme(mode) {
+    if (mode === 'light') {
+      document.body.classList.add('light');
+    } else if (mode === 'dark') {
+      document.body.classList.remove('light');
+    } else {
+      // system
+      if (systemDark.matches) document.body.classList.remove('light');
+      else document.body.classList.add('light');
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(savedTheme);
+
+  // Set the correct radio on load
+  const radioToCheck = document.getElementById('opt-' + savedTheme);
+  if (radioToCheck) radioToCheck.checked = true;
+
+  document.querySelectorAll('.glass-pill input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const mode = radio.value;
+      applyTheme(mode);
+      localStorage.setItem('theme', mode);
+      updateParticlesTheme();
+    });
+  });
+
+  // System mode: update when OS preference changes
+  systemDark.addEventListener('change', () => {
+    if (localStorage.getItem('theme') === 'system') applyTheme('system');
   });
 
   // ── Soldan Sağa Glow Dalgası ──────────────────────────────
   // Son kart ~2.05s'de yerleşir, 2.2s'de dalga başlar
-  const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify'];
+  const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
   const glowWaveStagger = 200; // ms kart arası gecikme
   const glowWaveHold    = 500; // ms parlak kalma süresi
 
@@ -937,7 +1099,7 @@
 
   // ── Glow bittikten sonra butonları sırayla aç (soldan sağa) ──
   // Son kart glowu: 2200 + 3*200 + 500 = 3300ms → +150ms buffer = 3450ms
-  const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify'];
+  const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
   const btnUnlockStagger = 200; // ms buton arası gecikme
 
   btnUnlockOrder.forEach((id, i) => {
@@ -963,18 +1125,20 @@
     discord:   '0 0 140px rgba(88,101,242,0.65), 0 0 0 4px rgba(88,101,242,0.9)',
     tiktok:    '0 0 140px rgba(0,242,234,0.55),  0 0 0 4px rgba(255,0,80,0.9)',
     spotify:   '0 0 140px rgba(30,215,96,0.65),  0 0 0 4px rgba(212,245,64,0.8)',
+    facebook:  '0 0 140px rgba(24,119,242,0.7),  0 0 0 4px rgba(66,176,255,0.9)',
   };
 
   function goToInstagram(url) { expandCard('instagram', url); }
   function goToDiscord(url)   { expandCard('discord',   url); }
   function goToTikTok(url)    { expandCard('tiktok',    url); }
   function goToSpotify(url)   { expandCard('spotify',   url); }
+  function goToFacebook(url)  { expandCard('facebook',  url); }
 
   function expandCard(type, url) {
     const card    = document.querySelector('.card-' + type);
     const btn     = document.getElementById(type + '-btn');
     const title   = document.querySelector('.site-title');
-    const allIds  = ['instagram', 'discord', 'tiktok', 'spotify'];
+    const allIds  = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
     const others  = allIds.filter(id => id !== type);
 
     // rect'i EN BAŞTA oku — animasyonlar başlamadan önce
@@ -1138,7 +1302,7 @@
       particlesJS('particles-js', getParticlesConfig(isLight));
     }
   }
-  document.getElementById('theme-toggle').addEventListener('click', updateParticlesTheme);
+  // particles listener is now handled by the radio change events above
 </script>
 </body>
 </html>
