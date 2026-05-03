@@ -87,7 +87,19 @@
     right: 20px;
     z-index: 500;
     opacity: 0;
-    animation: entranceFromTopRight 0.75s cubic-bezier(.16,1,.3,1) 0.3s forwards;
+    pointer-events: none;
+    transform: rotate(-360deg) scale(0);
+  }
+  #theme-switcher.theme-ready {
+    pointer-events: auto;
+    animation: switcherSpinIn 1.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes switcherSpinIn {
+    0%   { opacity: 0; transform: rotate(-360deg) scale(0); }
+    40%  { opacity: 1; }
+    75%  { transform: rotate(12deg) scale(1.08); }
+    88%  { transform: rotate(-5deg) scale(0.97); }
+    100% { opacity: 1; transform: rotate(0deg) scale(1); }
   }
 
   /* Pill: Liquid Glass */
@@ -204,8 +216,13 @@
 
 
 
+
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html, body {
+    overflow: hidden;
+  }
   body {
     background: var(--bg);
     min-height: 100vh;
@@ -265,7 +282,7 @@
   }
   #card-discord {
     opacity: 0;
-    animation: entranceFromTop 1s cubic-bezier(.16,1,.3,1) 0.55s forwards;
+    animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 0.55s forwards;
   }
   #card-tiktok {
     opacity: 0;
@@ -273,17 +290,61 @@
   }
   #card-spotify {
     opacity: 0;
-    animation: entranceFromTop 1s cubic-bezier(.16,1,.3,1) 1.05s forwards;
+    animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 1.05s forwards;
   }
   #card-facebook {
     opacity: 0;
     animation: entranceFromBottom 1s cubic-bezier(.16,1,.3,1) 1.3s forwards;
   }
 
-  /* ── Site Başlığı Girişi ── */
-  h1.site-title {
+  /* ── Site Başlığı: Kutu İniş + Typewriter ── */
+  .title-box-wrap {
     opacity: 0;
-    animation: titleEntrance 0.9s cubic-bezier(.16,1,.3,1) 0.15s forwards;
+    transform: translateY(-120px) scale(0.92);
+    animation: titleBoxDrop 0.85s cubic-bezier(.16,1,.3,1) 0.15s forwards;
+    border-radius: 16px;
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.4),
+      inset 0 1.5px 0 rgba(255,255,255,0.22),
+      inset 0 -1px 0 rgba(0,0,0,0.18);
+  }
+  body.light .title-box-wrap {
+    background: rgba(255,255,255,0.42);
+    border-color: rgba(255,255,255,0.75);
+    box-shadow:
+      0 8px 32px rgba(80,40,180,0.14),
+      inset 0 1.5px 0 rgba(255,255,255,0.9),
+      inset 0 -1px 0 rgba(120,80,200,0.1);
+  }
+  @keyframes titleBoxDrop {
+    from { opacity: 0; transform: translateY(-120px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Typewriter cursor */
+  h1.site-title::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 2px;
+    color: #7ec8c8;
+    animation: cursorBlink 0.75s step-end infinite;
+    opacity: 0;
+  }
+  h1.site-title.typing::after {
+    opacity: 1;
+  }
+  h1.site-title.done-typing::after {
+    animation: cursorBlink 0.75s step-end infinite;
+    opacity: 1;
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 0; }
+    50%       { opacity: 1; }
   }
 
   /* ── Bildirim (Hoş Geldiniz) ── */
@@ -729,11 +790,22 @@
       width: 46px;
       height: 46px;
     }
+    #theme-switcher {
+      top: 14px;
+      right: 14px;
+    }
+    #theme-intro,
+    #intro-name-pinned {
+      --theme-edge: 14px;
+      --theme-top: 14px;
+      --intro-top: 78px;
+    }
 
     /* ── Ana içerik padding ── */
     #main {
-      padding: 80px 16px 40px;
+      padding: 145px 16px 40px;
       gap: 18px;
+      justify-content: flex-start;
     }
 
     /* ── Site başlığı ── */
@@ -890,6 +962,15 @@
     transform: translateY(-10px) scale(1.03) !important;
   }
   .card.intro-glow::before { opacity: 1 !important; }
+  .card.intro-glow::after {
+    animation: cardShine 0.75s cubic-bezier(.16,1,.3,1) forwards !important;
+  }
+  .card.intro-glow .logo-wrap {
+    animation: logoFloat 0.6s cubic-bezier(.16,1,.3,1) forwards !important;
+  }
+  .card.intro-glow .card-name {
+    animation: nameSlide 1.2s cubic-bezier(.16,1,.3,1) forwards !important;
+  }
 
   .card-instagram.intro-glow {
     box-shadow: 0 28px 70px rgba(245,133,41,0.55), 0 0 0 2px rgba(221,42,123,0.8), 0 0 40px rgba(221,42,123,0.2) !important;
@@ -1001,6 +1082,8 @@
   </div>
 </div>
 
+
+
 <!-- Background blobs -->
 <div class="blob blob1"></div>
 <div class="blob blob2"></div>
@@ -1016,7 +1099,9 @@
 
 <!-- Main content -->
 <main id="main">
-  <h1 class="site-title">İsababoli</h1>
+  <div class="title-box-wrap">
+    <h1 class="site-title" id="site-title-el"></h1>
+  </div>
   <div class="cards">
 
     <!-- Instagram -->
@@ -1080,8 +1165,27 @@
 </main><!-- /#main -->
 
 <script>
-  // ── Animasyon boyunca hover efektlerini kilitle ──
-  document.body.classList.add('cards-locked');
+  // ── Typewriter for title ──
+  (function() {
+    const el = document.getElementById('site-title-el');
+    const text = 'İsababoli';
+    // Start typing after box lands (~1s)
+    setTimeout(() => {
+      el.classList.add('typing');
+      let i = 0;
+      const interval = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          el.classList.remove('typing');
+          el.classList.add('done-typing');
+        }
+      }, 90);
+    }, 1000);
+  })();
+
+
 
   // ── Liquid Glass Theme Switcher ──────────────────────
 
@@ -1112,12 +1216,14 @@
   // ── Soldan Sağa Glow Dalgası ──────────────────────────────
   // Son kart ~2.05s'de yerleşir, 2.2s'de dalga başlar
   const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
+  const glowWaveStart   = 2200;
   const glowWaveStagger = 200; // ms kart arası gecikme
   const glowWaveHold    = 500; // ms parlak kalma süresi
 
   setTimeout(() => {
     glowWaveOrder.forEach((id, i) => {
       const card = document.getElementById('card-' + id);
+      if (!card) return;
       card.style.opacity   = '1';
       card.style.animation = 'none';
 
@@ -1131,16 +1237,22 @@
 
       }, i * glowWaveStagger);
     });
-  }, 2200);
+  }, glowWaveStart);
 
   // ── Glow bittikten sonra butonları sırayla aç (soldan sağa) ──
   // Son kart glowu: 2200 + 3*200 + 500 = 3300ms → +150ms buffer = 3450ms
   const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
+  let buttonsUnlocked = false;
   const btnUnlockStagger = 200; // ms buton arası gecikme
 
-  btnUnlockOrder.forEach((id, i) => {
+  function unlockProfileButtons() {
+    if (buttonsUnlocked) return;
+    buttonsUnlocked = true;
+
+    btnUnlockOrder.forEach((id, i) => {
     setTimeout(() => {
       const btn = document.getElementById(id + '-btn');
+      if (!btn) return;
       // Kilit class'ını kaldır, zıplama animasyonunu başlat
       btn.classList.remove('btn-locked');
       btn.classList.add('btn-unlocking');
@@ -1152,10 +1264,19 @@
           document.body.classList.remove('cards-locked');
         }
       }, 880);
-    }, 3450 + i * btnUnlockStagger);
-  });
+    }, i * btnUnlockStagger);
+    });
+  }
 
-  // ── Evrensel Kart Genişleme Animasyonu ──────────────────────
+  // ── Theme switcher her şey bittikten sonra spin ile gelsin ──
+  const switcherDelay = glowWaveStart + ((glowWaveOrder.length - 1) * glowWaveStagger) + glowWaveHold + (btnUnlockOrder.length - 1) * btnUnlockStagger + 900;
+  setTimeout(() => {
+    document.getElementById('theme-switcher').classList.add('theme-ready');
+  }, switcherDelay);
+
+  const themeIntroStart = glowWaveStart + ((glowWaveOrder.length - 1) * glowWaveStagger) + glowWaveHold + 250;
+  setTimeout(unlockProfileButtons, themeIntroStart);
+
   const cardGlows = {
     instagram: '0 0 140px rgba(245,133,41,0.65), 0 0 0 4px rgba(221,42,123,0.9)',
     discord:   '0 0 140px rgba(88,101,242,0.65), 0 0 0 4px rgba(88,101,242,0.9)',
@@ -1173,7 +1294,7 @@
   function expandCard(type, url) {
     const card    = document.querySelector('.card-' + type);
     const btn     = document.getElementById(type + '-btn');
-    const title   = document.querySelector('.site-title');
+    const title   = document.querySelector('.title-box-wrap');
     const allIds  = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
     const others  = allIds.filter(id => id !== type);
 
