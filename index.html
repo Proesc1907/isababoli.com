@@ -13,207 +13,6 @@
     --shadow: 0 8px 40px rgba(0,0,0,0.5);
   }
 
-  /* ── Light mode variables ── */
-  body.light {
-    --bg: #e8e2ff;
-    --surface: rgba(255,255,255,0.92);
-    --border: rgba(100,50,200,0.35);
-    --shadow: 0 8px 40px rgba(70,30,180,0.18);
-  }
-  body.light .blob { opacity: 0.12; }
-
-  /* Light: kartlar liquid glass — daha şeffaf ve parlak */
-  body.light .card {
-    background: rgba(255,255,255,0.38);
-    border-color: rgba(255,255,255,0.7);
-    backdrop-filter: blur(32px) saturate(200%) brightness(1.12);
-    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.12);
-    box-shadow:
-      0 6px 32px rgba(80,40,180,0.14),
-      inset 0 1.5px 0 rgba(255,255,255,0.9),
-      inset 0 -1px 0 rgba(120,80,200,0.12),
-      inset 1px 0 0 rgba(255,255,255,0.6);
-  }
-  body.light .card:hover {
-    background: rgba(255,255,255,0.55);
-    border-color: rgba(255,255,255,0.85);
-    box-shadow:
-      0 18px 52px rgba(80,40,180,0.22),
-      inset 0 1.5px 0 rgba(255,255,255,1),
-      inset 0 -1px 0 rgba(120,80,200,0.16),
-      inset 1px 0 0 rgba(255,255,255,0.7);
-  }
-  body.light .card::before {
-    background: linear-gradient(
-      160deg,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.12) 35%,
-      transparent 55%
-    );
-  }
-
-  /* Light: kart hover ışıkları */
-  body.light .card-instagram:hover { box-shadow: 0 20px 60px rgba(245,133,41,0.5), 0 0 0 2px rgba(221,42,123,0.8); }
-  body.light .card-discord:hover   { box-shadow: 0 20px 60px rgba(88,101,242,0.5), 0 0 0 2px rgba(88,101,242,0.8); }
-  body.light .card-tiktok:hover    { box-shadow: 0 20px 60px rgba(0,242,234,0.45), 0 0 0 2px rgba(0,242,234,0.75); }
-  body.light .card-spotify:hover   { box-shadow: 0 20px 60px rgba(30,215,96,0.5),  0 0 0 2px rgba(29,185,84,0.8); }
-  body.light .card-facebook:hover  { box-shadow: 0 20px 60px rgba(24,119,242,0.5), 0 0 0 2px rgba(24,119,242,0.85); }
-
-  /* Light mode hover glow (switcher) */
-
-  /* Light: kart isim renkleri koyu ton */
-  body.light .card-instagram .card-name { background: linear-gradient(90deg, #c9420a, #a01060, #c9420a, #a01060); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  body.light .card-discord   .card-name { background: linear-gradient(90deg, #3b4bbf, #5a6a8a, #3b4bbf, #5a6a8a); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  body.light .card-tiktok    .card-name { background: linear-gradient(90deg, #cc0040, #007a75, #cc0040, #007a75); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  body.light .card-spotify   .card-name { background: linear-gradient(90deg, #0d7a36, #8aa000, #0d7a36, #8aa000); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  body.light .card-facebook  .card-name { background: linear-gradient(90deg, #0a4fc4, #1877f2, #0a4fc4, #1877f2); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-  /* Light: site title */
-  body.light h1.site-title {
-    background: linear-gradient(90deg, #6b25e0, #0a8080);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Light: particles daha belirgin */
-  body.light #particles-js canvas { filter: invert(0) !important; }
-
-  /* ── Liquid Glass Theme Switcher ── */
-  /* ── Liquid Glass Switcher ── */
-  #theme-switcher {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 500;
-    opacity: 0;
-    pointer-events: none;
-    transform: rotate(-360deg) scale(0);
-  }
-  #theme-switcher.theme-ready {
-    pointer-events: auto;
-    animation: switcherSpinIn 1.4s cubic-bezier(.16,1,.3,1) forwards;
-  }
-  @keyframes switcherSpinIn {
-    0%   { opacity: 0; transform: rotate(-360deg) scale(0); }
-    40%  { opacity: 1; }
-    75%  { transform: rotate(12deg) scale(1.08); }
-    88%  { transform: rotate(-5deg) scale(0.97); }
-    100% { opacity: 1; transform: rotate(0deg) scale(1); }
-  }
-
-  /* Pill: Liquid Glass */
-  .glass-pill {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 4px;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255,255,255,0.18);
-    backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
-    -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
-    box-shadow:
-      0 4px 24px rgba(0,0,0,0.5),
-      inset 0 1.5px 0 rgba(255,255,255,0.24),
-      inset 0 -1px 0 rgba(0,0,0,0.28),
-      inset 1px 0 0 rgba(255,255,255,0.14),
-      inset -1px 0 0 rgba(0,0,0,0.1);
-    gap: 0;
-  }
-  body.light .glass-pill {
-    background: rgba(255,255,255,0.42);
-    border-color: rgba(255,255,255,0.75);
-    backdrop-filter: blur(40px) saturate(200%) brightness(1.15);
-    -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.15);
-    box-shadow:
-      0 4px 18px rgba(120,80,200,0.18),
-      inset 0 1.5px 0 rgba(255,255,255,0.92),
-      inset 0 -1px 0 rgba(140,100,220,0.14),
-      inset 1px 0 0 rgba(255,255,255,0.6);
-  }
-
-  .glass-pill input[type="radio"] { display: none; }
-
-  /* Slot — genişçe, kare değil dikdörtgen */
-  .glass-pill label {
-    position: relative;
-    z-index: 2;
-    width: 50px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 100px;
-    user-select: none;
-    transition: opacity 0.25s ease;
-    opacity: 0.28;
-  }
-  .glass-pill label:hover { opacity: 0.58; }
-  .glass-pill input:checked + label { opacity: 1; }
-
-  /* ── İkonlar: outline/stroke ── */
-  .glass-pill label svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: rgba(255,255,255,0.92);
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: transform 0.35s cubic-bezier(.16,1,.3,1),
-                stroke 0.3s ease,
-                filter 0.3s ease;
-  }
-  body.light .glass-pill label svg {
-    stroke: rgba(38,22,78,0.70);
-  }
-  .glass-pill label:hover svg { transform: scale(1.1); }
-  .glass-pill input:checked + label svg { transform: scale(1.05); }
-
-  /* Seçili sun → teal */
-  .glass-pill:has(#opt-light:checked) #opt-light + label svg {
-    stroke: #00d4c8;
-    filter: drop-shadow(0 0 5px rgba(0,210,200,0.72));
-  }
-  /* Hover: sun → teal ipucu */
-  .glass-pill label[for="opt-light"]:hover svg { stroke: #00d4c8; }
-
-  /* ── Glider: Liquid Glass ── */
-  .glass-glider {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 50px;
-    height: 42px;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255,255,255,0.28);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow:
-      0 2px 12px rgba(0,0,0,0.4),
-      inset 0 1.5px 0 rgba(255,255,255,0.38),
-      inset 0 -1px 0 rgba(0,0,0,0.2),
-      inset 1px 0 0 rgba(255,255,255,0.2);
-    transition: transform 0.42s cubic-bezier(.16,1,.3,1);
-    z-index: 1;
-    pointer-events: none;
-  }
-  body.light .glass-glider {
-    background: rgba(255,255,255,0.65);
-    border-color: rgba(255,255,255,0.9);
-    box-shadow:
-      0 2px 10px rgba(120,80,200,0.15),
-      inset 0 1.5px 0 rgba(255,255,255,1),
-      inset 0 -1px 0 rgba(140,100,220,0.12);
-  }
-
-  /* Glider konumları */
-  .glass-pill:has(#opt-light:checked) .glass-glider { transform: translateX(0px); }
-  .glass-pill:has(#opt-dark:checked)  .glass-glider { transform: translateX(50px); }
-
 
 
 
@@ -230,21 +29,6 @@
     overflow-x: hidden;
     transition: background 0.4s, color 0.4s;
   }
-
-  /* Ambient background blobs */
-  .blob {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-    pointer-events: none;
-    z-index: 0;
-    transition: background 0.5s;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  .blob1 { width: 500px; height: 500px; background: #7b3ff2; top: -100px; left: -100px; }
-  .blob2 { width: 400px; height: 400px; background: #00c8c8; bottom: -80px; right: -80px; }
 
 
 
@@ -312,14 +96,42 @@
       0 8px 32px rgba(0,0,0,0.4),
       inset 0 1.5px 0 rgba(255,255,255,0.22),
       inset 0 -1px 0 rgba(0,0,0,0.18);
+    position: relative;
+    overflow: hidden;
   }
-  body.light .title-box-wrap {
-    background: rgba(255,255,255,0.42);
-    border-color: rgba(255,255,255,0.75);
-    box-shadow:
-      0 8px 32px rgba(80,40,180,0.14),
-      inset 0 1.5px 0 rgba(255,255,255,0.9),
-      inset 0 -1px 0 rgba(120,80,200,0.1);
+  /* Sol üst: mor blob */
+  .title-box-wrap::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 120px;
+    height: 120px;
+    background: #7b3ff2;
+    border-radius: 50%;
+    filter: blur(38px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Sağ alt: turkuaz blob */
+  .title-box-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    background: #00c8c8;
+    border-radius: 50%;
+    filter: blur(38px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .title-box-wrap h1 {
+    position: relative;
+    z-index: 1;
   }
   @keyframes titleBoxDrop {
     from { opacity: 0; transform: translateY(-120px) scale(0.92); }
@@ -371,11 +183,6 @@
     animation: notifSlideIn 0.8s cubic-bezier(.16,1,.3,1) 2.2s forwards,
                notifFadeOut 0.6s cubic-bezier(.7,0,.3,1) 5.0s forwards;
   }
-  body.light #welcome-notif {
-    background: rgba(248,246,255,0.94);
-    border-color: rgba(130,80,220,0.14);
-    box-shadow: 0 16px 56px rgba(70,30,180,0.14), 0 0 0 1px rgba(130,80,220,0.07);
-  }
   @keyframes notifSlideIn {
     0%   { opacity: 0; transform: translateY(-90px) scale(0.86); }
     50%  { opacity: 1; transform: translateY(5px) scale(1.01); }
@@ -392,9 +199,6 @@
     flex-shrink: 0;
     border-radius: 0;
   }
-  body.light .notif-accent {
-    background: linear-gradient(180deg, #7b3ff2 0%, #0a7070 100%);
-  }
   .notif-body {
     display: flex;
     flex-direction: column;
@@ -409,7 +213,6 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
-  body.light .notif-app-name { color: rgba(100,40,200,0.65); }
   .notif-message {
     font-family: 'Playfair Display', serif;
     font-size: 1rem;
@@ -418,7 +221,6 @@
     letter-spacing: 0.01em;
     line-height: 1.2;
   }
-  body.light .notif-message { color: rgba(15,8,45,0.88); }
 
   /* Main content */
   #main {
@@ -790,10 +592,6 @@
       width: 46px;
       height: 46px;
     }
-    #theme-switcher {
-      top: 14px;
-      right: 14px;
-    }
     #theme-intro,
     #intro-name-pinned {
       --theme-edge: 14px;
@@ -869,10 +667,6 @@
     .go-btn:active {
       transform: scale(0.95) !important;
     }
-
-    /* ── Blob'lar mobilde küçülsün ── */
-    .blob1 { width: 280px; height: 280px; }
-    .blob2 { width: 220px; height: 220px; }
 
     /* ── Kart hover glowları mobilde kapalı ── */
     .card-instagram:hover,
@@ -1008,6 +802,155 @@
     box-shadow: 0 0 0 4px rgba(24,119,242,0.4), 0 8px 24px rgba(66,176,255,0.5) !important;
   }
 
+  /* ══════════════════════════════════════
+     SES BUTONU — Sol Üst Köşe
+     ══════════════════════════════════════ */
+  #vol-widget {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 700;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(32px) saturate(180%) brightness(1.06);
+    -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(1.06);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.45),
+      inset 0 1.5px 0 rgba(255,255,255,0.26),
+      inset 0 -1px 0 rgba(0,0,0,0.22),
+      inset 1px 0 0 rgba(255,255,255,0.13),
+      inset -1px 0 0 rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition:
+      width 0.45s cubic-bezier(.16,1,.3,1),
+      border-radius 0.45s cubic-bezier(.16,1,.3,1),
+      box-shadow 0.35s ease;
+    width: 50px;
+    /* Specular sheen */
+    position: fixed;
+  }
+  #vol-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: linear-gradient(160deg, rgba(176,127,255,0.13) 0%, rgba(126,200,200,0.06) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #vol-widget:hover {
+    width: 200px;
+    border-radius: 50px;
+    box-shadow:
+      0 12px 48px rgba(123,63,242,0.35),
+      0 0 0 1px rgba(176,127,255,0.25),
+      inset 0 1.5px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 0 rgba(0,0,0,0.2);
+  }
+
+  #vol-icon-btn {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    color: #b07fff;
+    transition: color 0.25s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #vol-icon-btn:hover {
+    color: #d4b0ff;
+    transform: scale(1.1);
+  }
+  #vol-icon-btn:active {
+    transform: scale(0.9);
+  }
+  #vol-icon-btn svg {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 0 6px rgba(176,127,255,0.55));
+  }
+
+  /* Slider track alanı */
+  #vol-slider-wrap {
+    flex: 1;
+    padding-right: 16px;
+    opacity: 0;
+    transform: scaleX(0.6);
+    transform-origin: left center;
+    transition: opacity 0.3s ease 0.1s, transform 0.35s cubic-bezier(.16,1,.3,1) 0.08s;
+    position: relative;
+    z-index: 2;
+  }
+  #vol-widget:hover #vol-slider-wrap {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* Range input stillemesi */
+  #vol-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(176,127,255,0.25);
+    outline: none;
+    cursor: pointer;
+  }
+  #vol-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b07fff, #7ec8c8);
+    box-shadow: 0 0 8px rgba(176,127,255,0.7);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #vol-range::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+    box-shadow: 0 0 14px rgba(176,127,255,0.9);
+  }
+  #vol-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #b07fff, #7ec8c8);
+    box-shadow: 0 0 8px rgba(176,127,255,0.7);
+    cursor: pointer;
+  }
+  /* Dolu kısım rengi (CSS custom property ile güncellenir) */
+  #vol-range {
+    background: linear-gradient(
+      to right,
+      rgba(176,127,255,0.8) 0%,
+      rgba(126,200,200,0.7) var(--vol-fill, 70%),
+      rgba(176,127,255,0.18) var(--vol-fill, 70%),
+      rgba(176,127,255,0.18) 100%
+    );
+  }
+
+  /* Giriş öncesi gizle */
+  body.not-loaded #vol-widget {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   /* ── Soldan Sağa Işık Süpürmesi ── */
   #flash-overlay {
     position: fixed;
@@ -1051,51 +994,330 @@
   }
 </style>
 </head>
-<body>
+<body class="not-loaded cards-locked">
 
-<!-- Liquid Glass Theme Switcher -->
-<div id="theme-switcher" aria-label="Tema Değiştir">
-  <div class="glass-pill">
-    <!-- Light / Sun -->
-    <input type="radio" name="theme" id="opt-light" value="light">
-    <label for="opt-light" title="Açık Tema">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="4"/>
-        <line x1="12" y1="2"  x2="12" y2="5"/>
-        <line x1="12" y1="19" x2="12" y2="22"/>
-        <line x1="4.22" y1="4.22"  x2="6.34" y2="6.34"/>
-        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="2"  y1="12" x2="5"  y2="12"/>
-        <line x1="19" y1="12" x2="22" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-        <line x1="17.66" y1="6.34"  x2="19.78" y2="4.22"/>
-      </svg>
-    </label>
-    <!-- Dark / Moon -->
-    <input type="radio" name="theme" id="opt-dark" value="dark" checked>
-    <label for="opt-dark" title="Koyu Tema">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none"/>
-      </svg>
-    </label>
-    <div class="glass-glider"></div>
-  </div>
+
+
+
+
+<!-- Background Video -->
+<video id="bg-video" loop muted playsinline
+  style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none;">
+  <source src="https://r2.guns.lol/32d7b53a-e880-4b77-a789-fcd388746df6.mp4" type="video/mp4">
+</video>
+<audio id="bg-audio" src="https://r2.guns.lol/b61756ba-8c07-40e1-a485-b33fec66f3ba.mp3" loop></audio>
+
+<!-- Giriş Ekranı -->
+<div id="enter-screen" style="position:fixed;inset:0;z-index:9999;background:#000;cursor:pointer;transition:opacity 0.8s ease;">
+  <canvas id="snow-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+  <div id="enter-label" style="
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    color:#ffffff;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:1.15rem;font-weight:700;
+    letter-spacing:0.12em;
+    text-align:center;
+    pointer-events:none;
+    user-select:none;
+    text-shadow:0 0 18px rgba(255,255,255,0.18);
+  ">click to enter...</div>
 </div>
 
+<style>
+  /* Tıklanana kadar tüm site animasyonları dondurulur */
+  body.not-loaded #card-instagram,
+  body.not-loaded #card-discord,
+  body.not-loaded #card-tiktok,
+  body.not-loaded #card-spotify,
+  body.not-loaded #card-facebook {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: translateY(40px) !important;
+  }
+  body.not-loaded .title-box-wrap {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: translateY(-40px) !important;
+  }
+  body.not-loaded #welcome-notif {
+    animation: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+</style>
+
+<script>
+  // ── Kar animasyonu ──────────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('snow-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const FLAKE_COUNT = 55;
+    const flakes = [];
+
+    // Kar tanesi şekli: küçük asterisk / ❊
+    function drawFlake(x, y, r, alpha) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth   = r * 0.28;
+      ctx.lineCap     = 'round';
+      for (let i = 0; i < 6; i++) {
+        ctx.save();
+        ctx.rotate((Math.PI / 3) * i);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -r);
+        // küçük çapraz dallar
+        ctx.moveTo(0, -r * 0.55);
+        ctx.lineTo(-r * 0.28, -r * 0.83);
+        ctx.moveTo(0, -r * 0.55);
+        ctx.lineTo( r * 0.28, -r * 0.83);
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    for (let i = 0; i < FLAKE_COUNT; i++) {
+      flakes.push({
+        x:       Math.random() * window.innerWidth,
+        y:       Math.random() * window.innerHeight,
+        r:       3 + Math.random() * 5,        // boyut 3-8px
+        vx:      (Math.random() - 0.5) * 0.35,
+        vy:      0.25 + Math.random() * 0.55,
+        alpha:   0.35 + Math.random() * 0.5,
+        spin:    (Math.random() - 0.5) * 0.012,
+        angle:   Math.random() * Math.PI * 2,
+        twinkle: Math.random() * Math.PI * 2,
+        twSpeed: 0.018 + Math.random() * 0.025,
+      });
+    }
+
+    let running = true;
+    function animate() {
+      if (!running) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      flakes.forEach(f => {
+        f.x      += f.vx;
+        f.y      += f.vy;
+        f.angle  += f.spin;
+        f.twinkle += f.twSpeed;
+        const a = f.alpha * (0.7 + 0.3 * Math.sin(f.twinkle));
+        if (f.y > canvas.height + 20) { f.y = -20; f.x = Math.random() * canvas.width; }
+        if (f.x < -20) f.x = canvas.width + 20;
+        if (f.x > canvas.width + 20) f.x = -20;
+        ctx.save();
+        ctx.translate(f.x, f.y);
+        ctx.rotate(f.angle);
+        ctx.translate(-f.x, -f.y);
+        drawFlake(f.x, f.y, f.r, a);
+        ctx.restore();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ── Tıklanınca site başlar ──────────────────────────────
+    const enterScreen = document.getElementById('enter-screen');
+    const audio  = document.getElementById('bg-audio');
+    const video  = document.getElementById('bg-video');
+
+    // Hata durumunda medya elementlerini kaldır (görünüşü etkilemez)
+    video.addEventListener('error', () => { video.remove(); });
+    audio.addEventListener('error', () => { audio.remove(); });
+
+    enterScreen.addEventListener('click', function handler() {
+      enterScreen.removeEventListener('click', handler);
+
+      // Ses & video başlat
+      video.play();
+      audio.play();
+
+      // Kar ekranını soldur ve kaldır
+      enterScreen.style.opacity = '0';
+      setTimeout(() => {
+        running = false;
+        enterScreen.remove();
+      }, 800);
+
+      // Site animasyonlarını tetikle
+      document.body.classList.remove('not-loaded');
+      startSiteAnimations();
+    });
+  })();
+
+  // ── Site animasyonlarını başlatan fonksiyon ─────────────
+  function startSiteAnimations() {
+
+    // Typewriter for title
+    const el   = document.getElementById('site-title-el');
+    const text = 'İsababoli';
+    setTimeout(() => {
+      el.classList.add('typing');
+      let i = 0;
+      const interval = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          el.classList.remove('typing');
+          el.classList.add('done-typing');
+        }
+      }, 90);
+    }, 1000);
+
+    // Soldan Sağa Glow Dalgası
+    const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
+    const glowWaveStart   = 2200;
+    const glowWaveStagger = 200;
+    const glowWaveHold    = 500;
+
+    setTimeout(() => {
+      glowWaveOrder.forEach((id, i) => {
+        const card = document.getElementById('card-' + id);
+        if (!card) return;
+        card.style.opacity   = '1';
+        card.style.animation = 'none';
+        setTimeout(() => {
+          card.classList.add('intro-glow');
+          setTimeout(() => { card.classList.remove('intro-glow'); }, glowWaveHold);
+        }, i * glowWaveStagger);
+      });
+    }, glowWaveStart);
+
+    // Butonları sırayla aç
+    const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
+    let buttonsUnlocked = false;
+    const btnUnlockStagger = 200;
+
+    function unlockProfileButtons() {
+      if (buttonsUnlocked) return;
+      buttonsUnlocked = true;
+      btnUnlockOrder.forEach((id, i) => {
+        setTimeout(() => {
+          const btn = document.getElementById(id + '-btn');
+          if (!btn) return;
+          btn.classList.remove('btn-locked');
+          btn.classList.add('btn-unlocking');
+          setTimeout(() => {
+            btn.classList.remove('btn-unlocking');
+            if (i === btnUnlockOrder.length - 1) {
+              document.body.classList.remove('cards-locked');
+            }
+          }, 880);
+        }, i * btnUnlockStagger);
+      });
+    }
+
+    const themeIntroStart = glowWaveStart + ((glowWaveOrder.length - 1) * glowWaveStagger) + glowWaveHold + 250;
+    setTimeout(unlockProfileButtons, themeIntroStart);
+  }
+</script>
+
+<script>
+  // ── Ses Butonu Kontrolü ──────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    const audio   = document.getElementById('bg-audio');
+    const range   = document.getElementById('vol-range');
+    const iconOn  = document.getElementById('vol-icon-on');
+    const iconOff = document.getElementById('vol-icon-off');
+    const iconBtn = document.getElementById('vol-icon-btn');
+
+    let lastVol = 0.7;
+    let isMuted = false;
+
+    function updateFill(val) {
+      range.style.setProperty('--vol-fill', val + '%');
+    }
+
+    // Başlangıç sesi %70
+    audio.volume = 0.7;
+    updateFill(70);
+
+    // Slider → ses seviyesi
+    range.addEventListener('input', function() {
+      const v = parseInt(this.value) / 100;
+      audio.volume = v;
+      lastVol = v;
+      updateFill(this.value);
+      if (v === 0) {
+        isMuted = true;
+        iconOn.style.display  = 'none';
+        iconOff.style.display = '';
+      } else {
+        isMuted = false;
+        iconOn.style.display  = '';
+        iconOff.style.display = 'none';
+      }
+    });
+
+    // İkon tıkla → mute toggle
+    iconBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (!isMuted) {
+        lastVol = audio.volume > 0 ? audio.volume : 0.7;
+        audio.volume = 0;
+        range.value  = 0;
+        updateFill(0);
+        isMuted = true;
+        iconOn.style.display  = 'none';
+        iconOff.style.display = '';
+      } else {
+        const restoreVol = lastVol > 0 ? lastVol : 0.7;
+        audio.volume = restoreVol;
+        range.value  = Math.round(restoreVol * 100);
+        updateFill(Math.round(restoreVol * 100));
+        isMuted = false;
+        iconOn.style.display  = '';
+        iconOff.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<!-- Video üstüne hafif karartma katmanı (okunabilirlik için) -->
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:-1;pointer-events:none;"></div>
 
 
-<!-- Background blobs -->
-<div class="blob blob1"></div>
-<div class="blob blob2"></div>
 
-<!-- Particles.js -->
-<div id="particles-js"></div>
+
 
 
 
 
 <!-- White flash overlay -->
 <div id="flash-overlay"></div>
+
+<!-- Ses Butonu (Sol Üst) -->
+<div id="vol-widget">
+  <!-- Ses ikonu / mute toggle butonu -->
+  <button id="vol-icon-btn" title="Ses Aç/Kapat" aria-label="Ses Aç/Kapat">
+    <!-- Speaker On -->
+    <svg id="vol-icon-on" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <!-- Speaker Muted (gizli başlar) -->
+    <svg id="vol-icon-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+      <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <!-- Slider -->
+  <div id="vol-slider-wrap">
+    <input id="vol-range" type="range" min="0" max="100" value="70" />
+  </div>
+</div>
 
 <!-- Main content -->
 <main id="main">
@@ -1165,117 +1387,6 @@
 </main><!-- /#main -->
 
 <script>
-  // ── Typewriter for title ──
-  (function() {
-    const el = document.getElementById('site-title-el');
-    const text = 'İsababoli';
-    // Start typing after box lands (~1s)
-    setTimeout(() => {
-      el.classList.add('typing');
-      let i = 0;
-      const interval = setInterval(() => {
-        el.textContent += text[i];
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          el.classList.remove('typing');
-          el.classList.add('done-typing');
-        }
-      }, 90);
-    }, 1000);
-  })();
-
-
-
-  // ── Liquid Glass Theme Switcher ──────────────────────
-
-  function applyTheme(mode) {
-    if (mode === 'light') {
-      document.body.classList.add('light');
-    } else {
-      document.body.classList.remove('light');
-    }
-  }
-
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  applyTheme(savedTheme);
-
-  // Set the correct radio on load
-  const radioToCheck = document.getElementById('opt-' + savedTheme);
-  if (radioToCheck) radioToCheck.checked = true;
-
-  document.querySelectorAll('.glass-pill input[type="radio"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      const mode = radio.value;
-      applyTheme(mode);
-      localStorage.setItem('theme', mode);
-      updateParticlesTheme();
-    });
-  });
-
-  // ── Soldan Sağa Glow Dalgası ──────────────────────────────
-  // Son kart ~2.05s'de yerleşir, 2.2s'de dalga başlar
-  const glowWaveOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
-  const glowWaveStart   = 2200;
-  const glowWaveStagger = 200; // ms kart arası gecikme
-  const glowWaveHold    = 500; // ms parlak kalma süresi
-
-  setTimeout(() => {
-    glowWaveOrder.forEach((id, i) => {
-      const card = document.getElementById('card-' + id);
-      if (!card) return;
-      card.style.opacity   = '1';
-      card.style.animation = 'none';
-
-      setTimeout(() => {
-        // Tam hover efektini CSS class ile uygula
-        card.classList.add('intro-glow');
-
-        setTimeout(() => {
-          card.classList.remove('intro-glow');
-        }, glowWaveHold);
-
-      }, i * glowWaveStagger);
-    });
-  }, glowWaveStart);
-
-  // ── Glow bittikten sonra butonları sırayla aç (soldan sağa) ──
-  // Son kart glowu: 2200 + 3*200 + 500 = 3300ms → +150ms buffer = 3450ms
-  const btnUnlockOrder   = ['instagram', 'discord', 'tiktok', 'spotify', 'facebook'];
-  let buttonsUnlocked = false;
-  const btnUnlockStagger = 200; // ms buton arası gecikme
-
-  function unlockProfileButtons() {
-    if (buttonsUnlocked) return;
-    buttonsUnlocked = true;
-
-    btnUnlockOrder.forEach((id, i) => {
-    setTimeout(() => {
-      const btn = document.getElementById(id + '-btn');
-      if (!btn) return;
-      // Kilit class'ını kaldır, zıplama animasyonunu başlat
-      btn.classList.remove('btn-locked');
-      btn.classList.add('btn-unlocking');
-      // Animasyon bitince unlocking class'ını temizle ve tıklamaya aç
-    setTimeout(() => {
-        btn.classList.remove('btn-unlocking');
-        // Son butonsa hover kilidini de kaldır
-        if (i === btnUnlockOrder.length - 1) {
-          document.body.classList.remove('cards-locked');
-        }
-      }, 880);
-    }, i * btnUnlockStagger);
-    });
-  }
-
-  // ── Theme switcher her şey bittikten sonra spin ile gelsin ──
-  const switcherDelay = glowWaveStart + ((glowWaveOrder.length - 1) * glowWaveStagger) + glowWaveHold + (btnUnlockOrder.length - 1) * btnUnlockStagger + 900;
-  setTimeout(() => {
-    document.getElementById('theme-switcher').classList.add('theme-ready');
-  }, switcherDelay);
-
-  const themeIntroStart = glowWaveStart + ((glowWaveOrder.length - 1) * glowWaveStagger) + glowWaveHold + 250;
-  setTimeout(unlockProfileButtons, themeIntroStart);
 
   const cardGlows = {
     instagram: '0 0 140px rgba(245,133,41,0.65), 0 0 0 4px rgba(221,42,123,0.9)',
@@ -1382,87 +1493,127 @@
   }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<!-- ── Özel İmleç: Parlayan Beyaz Nokta + İz ── -->
+<canvas id="cursor-canvas" style="
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:99998;pointer-events:none;
+"></canvas>
+
 <script>
-  // Particles config
-  function getParticlesConfig(isLight) {
-    return {
-      particles: {
-        number: { value: 55, density: { enable: true, value_area: 800 } },
-        color: { value: isLight ? ['#6b25e0', '#0a7070', '#9b3ff0', '#1a4a8a'] : ['#b07fff', '#7ec8c8', '#c084fc', '#ffffff'] },
-        shape: { type: 'circle' },
-        opacity: {
-          value: isLight ? 0.85 : 0.5,
-          random: true,
-          anim: { enable: true, speed: 1, opacity_min: isLight ? 0.4 : 0.1, sync: false }
-        },
-        size: {
-          value: isLight ? 4 : 3,
-          random: true,
-          anim: { enable: true, speed: 2, size_min: 0.5, sync: false }
-        },
-        line_linked: {
-          enable: true,
-          distance: 130,
-          color: isLight ? '#6b25e0' : '#b07fff',
-          opacity: isLight ? 0.35 : 0.12,
-          width: isLight ? 1.5 : 1
-        },
-        move: {
-          enable: true,
-          speed: 1.2,
-          direction: 'none',
-          random: true,
-          straight: false,
-          out_mode: 'out',
-          bounce: false
-        }
-      },
-      interactivity: {
-        detect_on: 'canvas',
-        events: {
-          onhover: { enable: true, mode: 'grab' },
-          onclick: { enable: true, mode: 'push' },
-          resize: true
-        },
-        modes: {
-          grab: { distance: 140, line_linked: { opacity: isLight ? 0.7 : 0.35 } },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    };
-  }
+(function() {
+  const canvas = document.getElementById('cursor-canvas');
+  const ctx    = canvas.getContext('2d');
 
-  // Mobilde particles sayısını azalt
-  const isMobile = window.matchMedia('(max-width: 768px)').matches
-    || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-  if (isMobile) {
-    const baseCfg = getParticlesConfig(document.body.classList.contains('light'));
-    baseCfg.particles.number.value = 30;
-    baseCfg.particles.line_linked.enable = false;
-    particlesJS('particles-js', baseCfg);
-  } else {
-    particlesJS('particles-js', getParticlesConfig(document.body.classList.contains('light')));
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
+  resize();
+  window.addEventListener('resize', resize);
 
-  // Tema değişince particles'ı yeniden başlat (mobil ayarlarına da dikkat et)
-  function updateParticlesTheme() {
-    const isLight = document.body.classList.contains('light');
-    if (window.pJSDom && window.pJSDom.length > 0) {
-      window.pJSDom[0].pJS.fn.vendors.destroypJS();
-      window.pJSDom = [];
+  const TRAIL_LEN = 55;
+  const trail = [];
+  let mx = -200, my = -200;
+  let visible = false;
+
+  // Tıklama animasyonu: 0=yok, 0→1=animasyon sürüyor
+  let clickProgress = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    visible = true;
+  });
+
+  // İmleç ekrandan çıkınca: iz + nokta tamamen temizlenir
+  document.addEventListener('mouseleave', () => {
+    visible = false;
+    trail.length = 0; // İzi anında sil
+  });
+
+  document.addEventListener('mouseenter', () => {
+    visible = true;
+  });
+
+  // Tıklama: küçül → büyü animasyonu başlat
+  document.addEventListener('mousedown', () => {
+    clickProgress = 0.001;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (visible) {
+      trail.push({ x: mx, y: my });
     }
-    if (isMobile) {
-      const mobileCfg = getParticlesConfig(isLight);
-      mobileCfg.particles.number.value = 30;
-      mobileCfg.particles.line_linked.enable = false;
-      particlesJS('particles-js', mobileCfg);
-    } else {
-      particlesJS('particles-js', getParticlesConfig(isLight));
+    while (trail.length > TRAIL_LEN) trail.shift();
+
+    // İz — sadece visible iken çizilir, çıkınca trail.length=0 olduğu için zaten yok
+    for (let i = 1; i < trail.length; i++) {
+      const t = i / trail.length;
+      const alpha = t * t * 0.55;
+      const width = t * 2.2;
+      ctx.beginPath();
+      ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+      ctx.lineTo(trail[i].x,     trail[i].y);
+      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+      ctx.lineWidth   = width;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+      ctx.stroke();
     }
+
+    // Ana nokta
+    if (visible && trail.length > 0) {
+      const p = trail[trail.length - 1];
+
+      // Tıklama scale hesapla: sin eğrisiyle küçülüp büyür
+      let scale = 1;
+      if (clickProgress > 0) {
+        scale = 1 - Math.sin(clickProgress * Math.PI) * 0.6; // 1 → 0.4 → 1
+        clickProgress += 0.055;
+        if (clickProgress >= 1) clickProgress = 0;
+      }
+
+      const dotR  = 4  * scale;
+      const haloR = 18 * scale;
+
+      // Dış halo
+      if (haloR > 0.5) {
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, haloR);
+        glow.addColorStop(0,    'rgba(255,255,255,0.22)');
+        glow.addColorStop(0.45, 'rgba(255,255,255,0.08)');
+        glow.addColorStop(1,    'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, haloR, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+      }
+
+      // İç parlak nokta
+      if (dotR > 0.3) {
+        const dot = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, dotR);
+        dot.addColorStop(0,   'rgba(255,255,255,1)');
+        dot.addColorStop(0.5, 'rgba(220,220,255,0.85)');
+        dot.addColorStop(1,   'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, dotR, 0, Math.PI * 2);
+        ctx.fillStyle = dot;
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(draw);
   }
-  // particles listener is now handled by the radio change events above
+  draw();
+})();
 </script>
+
+<style>
+  /* Tarayıcının varsayılan imlecini gizle */
+  *, *::before, *::after { cursor: none !important; }
+</style>
+
 </body>
 </html>
