@@ -3,123 +3,590 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquid Glass Galeri & Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Liquid Glass Galeri & Panel Pro</title>
+    <style>
+        /* CSS TASARIM - LİQUİD GLASS MİMARİSİ */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --blur: blur(20px) saturate(150%);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a5;
+            --accent: #007aff;
+            --accent-hover: #0056b3;
+            --danger: #ff3b30;
+            --success: #34c759;
+            --warning: #ffcc00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #050505; color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+
+        /* Arka Plan Sıvı Işıklar (Liquid Glass) */
+        .bg-blob { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; animation: float 15s infinite alternate ease-in-out; }
+        .blob-1 { width: 50vw; height: 50vw; background: rgba(0, 122, 255, 0.35); top: -20vh; left: -10vw; }
+        .blob-2 { width: 45vw; height: 45vw; background: rgba(175, 82, 222, 0.25); bottom: -10vh; right: -10vw; animation-delay: -5s; }
+        .blob-3 { width: 35vw; height: 35vw; background: rgba(255, 45, 85, 0.2); top: 30vh; left: 30vw; animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(8vw, 6vh) scale(1.15); }
+        }
+
+        /* Ortak Glass Sınıfları */
+        .glass-card, .glass-panel {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+            border-radius: 24px; box-shadow: var(--glass-shadow); padding: 25px;
+        }
+
+        /* Ekran Yönetimi */
+        .app-screen { display: none; padding: 20px; min-height: 100vh; animation: fadeIn 0.4s ease; max-width: 1400px; margin: 0 auto; }
+        .active-screen { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Formlar & Butonlar */
+        .auth-container { max-width: 400px; margin: 10vh auto; text-align: center; }
+        .glow-text { font-size: 2.2rem; background: linear-gradient(90deg, #fff, #a0a0a5); -webkit-background-clip: text; color: transparent; margin-bottom: 10px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted); }
+        input, textarea { width: 100%; padding: 14px; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; outline: none; transition: 0.3s; font-size: 1rem; }
+        input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 122, 255, 0.4); }
+        textarea { resize: vertical; min-height: 100px; }
+        
+        .glass-btn { padding: 12px 24px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: white; cursor: pointer; transition: 0.3s; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .glass-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+        .glass-btn.primary { background: var(--accent); border: none; }
+        .glass-btn.primary:hover { background: var(--accent-hover); }
+        .glass-btn.danger { background: rgba(255, 59, 48, 0.2); color: var(--danger); border-color: rgba(255,59,48,0.4); }
+        .glass-btn.success { background: rgba(52, 199, 89, 0.2); color: var(--success); border-color: rgba(52,199,89,0.4); }
+        .glass-btn.small { padding: 8px 16px; font-size: 0.85rem; }
+
+        /* Sekmeler (Tabs) */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; overflow-x: auto; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-size: 1rem; padding: 10px 15px; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .tab-btn.active { color: var(--accent); font-weight: bold; border-bottom: 2px solid var(--accent); }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .header .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+        .user-controls { display: flex; gap: 15px; align-items: center; }
+
+        /* Galeri Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .gallery-item { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.08); filter: brightness(0.8); }
+        .item-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); display: flex; justify-content: space-between; align-items: flex-end; opacity: 0; transition: 0.3s; }
+        .gallery-item:hover .item-info { opacity: 1; }
+        .item-author { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Ticket & Table */
+        .ticket-list { display: flex; flex-direction: column; gap: 15px; }
+        .ticket-card { border-left: 4px solid var(--warning); }
+        .ticket-card.closed { border-left-color: var(--success); }
+        .ticket-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); }
+        .ticket-reply { margin-top: 15px; padding: 15px; background: rgba(0, 122, 255, 0.1); border-radius: 12px; border-left: 2px solid var(--accent); }
+        
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid var(--glass-border); }
+        th { color: var(--text-muted); font-weight: 500; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .badge.open { background: rgba(255, 204, 0, 0.2); color: var(--warning); }
+        .badge.closed { background: rgba(52, 199, 89, 0.2); color: var(--success); }
+        
+        /* Fotoğraf Yükleme Alanı */
+        .upload-area { border: 2px dashed var(--glass-border); padding: 40px; text-align: center; border-radius: 16px; cursor: pointer; transition: 0.3s; margin-bottom: 20px; background: rgba(0,0,0,0.2); }
+        .upload-area:hover { border-color: var(--accent); background: rgba(0, 122, 255, 0.05); }
+        .upload-preview { max-width: 100%; max-height: 300px; border-radius: 12px; margin-top: 15px; display: none; }
+        #file-input { display: none; }
+
+        .hidden { display: none !important; }
+        .error-msg { color: var(--danger); margin-top: 10px; font-size: 0.9rem; min-height: 20px; }
+    </style>
 </head>
 <body>
-    <!-- Arka Plan Işık Sızıntıları (Liquid Glass Atmosferi) -->
+
+    <!-- Arka Plan Işıkları -->
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
     <div class="bg-blob blob-3"></div>
 
-    <!-- 1. GİRİŞ / KAYIT EKRANI -->
-    <div id="auth-container" class="glass-screen active">
-        <div class="glass-card auth-card">
-            <h1 class="glow-text">Liquid Gallery</h1>
-            <p class="subtitle">Dijital Evrene Hoş Geldiniz</p>
-            
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('login')">Giriş Yap</button>
-                <button class="tab-btn" onclick="switchTab('register')">Kayıt Ol</button>
+    <!-- 1. GİRİŞ & KAYIT EKRANI -->
+    <div id="auth-screen" class="app-screen active-screen">
+        <div class="glass-card auth-container">
+            <h1 class="glow-text">LiquidSpace</h1>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Profesyonel Dijital Galeri</p>
+
+            <div class="tabs" style="justify-content: center; border:none;">
+                <button class="tab-btn active" onclick="switchAuthTab('login')">Giriş Yap</button>
+                <button class="tab-btn" onclick="switchAuthTab('register')">Kayıt Ol</button>
             </div>
 
             <!-- Giriş Formu -->
-            <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+            <form id="login-form" class="tab-content active" onsubmit="handleLogin(event)">
                 <div class="input-group">
-                    <input type="email" id="login-email" required placeholder="E-posta adresiniz">
+                    <input type="text" id="login-username" required placeholder="Kullanıcı Adı">
                 </div>
                 <div class="input-group">
-                    <input type="password" id="login-password" required placeholder="Şifreniz">
+                    <input type="password" id="login-password" required placeholder="Şifre">
                 </div>
-                <button type="submit" class="glass-btn primary">Giriş Yap</button>
+                <button type="submit" class="glass-btn primary" style="width: 100%;">Sisteme Gir</button>
             </form>
 
             <!-- Kayıt Formu -->
-            <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
+            <form id="register-form" class="tab-content" onsubmit="handleRegister(event)">
                 <div class="input-group">
-                    <input type="text" id="reg-name" required placeholder="Adınız Soyadınız">
+                    <input type="text" id="reg-username" required placeholder="Kullanıcı Adı (Boşluksuz)">
                 </div>
                 <div class="input-group">
-                    <input type="email" id="reg-email" required placeholder="E-posta adresiniz">
+                    <input type="password" id="reg-password" required placeholder="Şifre">
                 </div>
-                <div class="input-group">
-                    <input type="password" id="reg-password" required placeholder="Şifreniz">
-                </div>
-                <button type="submit" class="glass-btn primary">Kayıt Ol</button>
+                <button type="submit" class="glass-btn primary" style="width: 100%;">Hesap Oluştur</button>
             </form>
             <p id="auth-error" class="error-msg"></p>
         </div>
     </div>
 
-    <!-- 2. KULLANICI GALERİ EKRANI -->
-    <div id="gallery-container" class="app-screen">
-        <header class="glass-header">
+    <!-- 2. KULLANICI EKRANI (Galeri ve Destek) -->
+    <div id="user-screen" class="app-screen">
+        <div class="glass-panel header">
             <div class="logo">✨ LiquidSpace</div>
-            <div class="user-menu">
-                <span id="welcome-user">Kullanıcı</span>
-                <button id="admin-nav-btn" class="glass-btn admin-badge hidden" onclick="openAdminPanel()">Admin Panel</button>
-                <button class="glass-btn logout" onclick="handleLogout()">Çıkış</button>
+            <div class="user-controls">
+                <span id="user-welcome" style="color: var(--text-muted);"></span>
+                <button id="btn-go-admin" class="glass-btn danger hidden" onclick="showScreen('admin-screen')">Admin Paneli</button>
+                <button class="glass-btn" onclick="logout()">Çıkış Yap</button>
             </div>
-        </header>
+        </div>
 
-        <main class="main-content">
-            <section class="hero-banner glass-card">
-                <h2>Seçkin Tasarım Galerisi</h2>
-                <p>iOS 26 Liquid Glass standartlarında akışkan görsel deneyimi.</p>
-            </section>
+        <div class="glass-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchUserTab('tab-my-gallery', this)">Galerim</button>
+                <button class="tab-btn" onclick="switchUserTab('tab-upload', this)">Fotoğraf Yükle</button>
+                <button class="tab-btn" onclick="switchUserTab('tab-support', this)">Destek / Şikayet</button>
+            </div>
 
-            <div class="gallery-grid" id="image-grid">
-                <!-- Dinamik görseller buraya gelecek -->
-                <div class="glass-card gallery-item">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600" alt="Art">
-                    <div class="item-info"><span>Liquid Abstract #1</span></div>
-                </div>
-                <div class="glass-card gallery-item">
-                    <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=600" alt="Art">
-                    <div class="item-info"><span>Neon Fluid #2</span></div>
-                </div>
-                <div class="glass-card gallery-item">
-                    <img src="https://images.unsplash.com/photo-1618172193763-c511deb635ca?q=80&w=600" alt="Art">
-                    <div class="item-info"><span>Glass Waves #3</span></div>
+            <!-- Galerim Tab -->
+            <div id="tab-my-gallery" class="tab-content active">
+                <h3>Yüklediğin Fotoğraflar</h3>
+                <div class="gallery-grid" id="user-gallery-grid">
+                    <!-- Dinamik İçerik -->
                 </div>
             </div>
-        </main>
+
+            <!-- Fotoğraf Yükle Tab -->
+            <div id="tab-upload" class="tab-content">
+                <h3>Yeni Eser Ekle</h3>
+                <p style="color:var(--text-muted); margin-bottom: 20px;">Sadece PNG veya JPG formatında resimler desteklenir.</p>
+                
+                <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                    <p>📸 Tıkla ve bilgisayarından bir fotoğraf seç</p>
+                    <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
+                    <img id="image-preview" class="upload-preview" src="">
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="upload-title" placeholder="Fotoğrafın için bir başlık (İsteğe bağlı)">
+                </div>
+                <button class="glass-btn primary" onclick="savePhoto()">Fotoğrafı Yayınla</button>
+                <p id="upload-msg" style="margin-top: 15px; color: var(--success);"></p>
+            </div>
+
+            <!-- Destek / Şikayet Tab -->
+            <div id="tab-support" class="tab-content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3>Yeni Ticket Aç</h3>
+                        <p style="color:var(--text-muted); margin-bottom:15px;">Sistemsel bir şikayetiniz varsa veya admin ile iletişime geçmek istiyorsanız yazın.</p>
+                        <div class="input-group">
+                            <input type="text" id="ticket-subject" placeholder="Konu Başlığı" required>
+                        </div>
+                        <div class="input-group">
+                            <textarea id="ticket-message" placeholder="Mesajınız..." required></textarea>
+                        </div>
+                        <button class="glass-btn primary" onclick="createTicket()">Gönder</button>
+                    </div>
+                    <div>
+                        <h3>Geçmiş Taleplerim</h3>
+                        <div class="ticket-list" id="user-ticket-list" style="margin-top: 15px;">
+                            <!-- Dinamik Ticketlar -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 3. YETKİLİ (ADMIN) PANELİ EKRANI -->
-    <div id="admin-container" class="app-screen">
-        <header class="glass-header">
-            <div class="logo">🔒 Admin Kontrol Merkezi</div>
-            <button class="glass-btn" onclick="closeAdminPanel()">Galeriye Dön</button>
-        </header>
+    <!-- 3. ADMİN PANELİ EKRANI -->
+    <div id="admin-screen" class="app-screen">
+        <div class="glass-panel header" style="border-color: rgba(255, 59, 48, 0.4);">
+            <div class="logo" style="color: var(--danger);">🔒 Admin Merkezi</div>
+            <button class="glass-btn" onclick="showScreen('user-screen')">Kullanıcı Arayüzüne Dön</button>
+        </div>
 
-        <main class="main-content">
-            <div class="glass-card admin-dashboard">
-                <h3>Kayıtlı Kullanıcı Yönetimi</h3>
-                <p>Sistemdeki üyeleri görüntüleyebilir, şüpheli hesapları banlayabilirsiniz.</p>
-                
-                <div class="table-responsive">
-                    <table class="glass-table">
+        <div class="glass-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchAdminTab('admin-users', this)">Kullanıcılar</button>
+                <button class="tab-btn" onclick="switchAdminTab('admin-photos', this)">Tüm Fotoğraflar</button>
+                <button class="tab-btn" onclick="switchAdminTab('admin-tickets', this)">Şikayetler (Ticketlar)</button>
+            </div>
+
+            <!-- Kullanıcı Yönetimi -->
+            <div id="admin-users" class="tab-content active">
+                <div class="table-wrapper">
+                    <table>
                         <thead>
-                            <tr>
-                                <th>Kullanıcı Adı</th>
-                                <th>E-posta</th>
-                                <th>Rol</th>
-                                <th>Durum</th>
-                                <th>İşlem</th>
-                            </tr>
+                            <tr><th>Kullanıcı Adı</th><th>Yetki</th><th>Durum</th><th>İşlem</th></tr>
                         </thead>
-                        <tbody id="admin-user-list">
-                            <!-- JavaScript ile doldurulacak -->
-                        </tbody>
+                        <tbody id="admin-user-tbody"></tbody>
                     </table>
                 </div>
             </div>
-        </main>
+
+            <!-- Tüm Fotoğraflar -->
+            <div id="admin-photos" class="tab-content">
+                <div class="gallery-grid" id="admin-gallery-grid"></div>
+            </div>
+
+            <!-- Şikayetler Yönetimi -->
+            <div id="admin-tickets" class="tab-content">
+                <div class="ticket-list" id="admin-ticket-list"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- Betikler -->
-    <script src="auth.js"></script>
-    <script src="app.js"></script>
+    <!-- JAVASCRIPT: TÜM MANTIK VE VERİ TABANI YÖNETİMİ -->
+    <script>
+        // --- VERİTABANI BAŞLATMA (LocalStorage) ---
+        function initDB() {
+            if (!localStorage.getItem('users')) {
+                // Varsayılan Admin Hesabı
+                localStorage.setItem('users', JSON.stringify([{ username: "admin", password: "123", role: "admin", isBanned: false }]));
+            }
+            if (!localStorage.getItem('posts')) localStorage.setItem('posts', JSON.stringify([]));
+            if (!localStorage.getItem('tickets')) localStorage.setItem('tickets', JSON.stringify([]));
+        }
+
+        // --- GİRİŞ / ÇIKIŞ İŞLEMLERİ ---
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-container .tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.auth-container .tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(`${tab}-form`).classList.add('active');
+            document.getElementById('auth-error').innerText = '';
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value.trim().toLowerCase();
+            const password = document.getElementById('reg-password').value;
+            const errorLabel = document.getElementById('auth-error');
+
+            if(username.includes(" ")) {
+                errorLabel.innerText = "Kullanıcı adında boşluk olamaz!"; return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('users'));
+            if (users.find(u => u.username === username)) {
+                errorLabel.innerText = "Bu kullanıcı adı zaten alınmış!"; return;
+            }
+
+            users.push({ username, password, role: "user", isBanned: false });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
+            switchAuthTab('login');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+            const errorLabel = document.getElementById('auth-error');
+
+            let users = JSON.parse(localStorage.getItem('users'));
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (!user) { errorLabel.innerText = "Kullanıcı adı veya şifre hatalı!"; return; }
+            if (user.isBanned) { errorLabel.innerText = "Hesabınız admin tarafından engellenmiştir."; return; }
+
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            loadApplication();
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            location.reload();
+        }
+
+        // --- EKRAN / UYGULAMA YÜKLEME ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+            if (screenId === 'admin-screen') loadAdminData();
+            if (screenId === 'user-screen') loadUserData();
+        }
+
+        function loadApplication() {
+            initDB();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                document.getElementById('user-welcome').innerText = `👋 Merhaba, @${currentUser.username}`;
+                if (currentUser.role === 'admin') document.getElementById('btn-go-admin').classList.remove('hidden');
+                showScreen('user-screen');
+            } else {
+                showScreen('auth-screen');
+            }
+        }
+
+        // --- KULLANICI İŞLEMLERİ (FOTO & TICKET) ---
+        function switchUserTab(tabId, btn) {
+            document.querySelectorAll('#user-screen .tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#user-screen .tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Fotoğraf Sıkıştırma ve Base64 (LocalStorage dolmasın diye)
+        let currentBase64Image = null;
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_SIZE = 800; // Maksimum boyut
+                    let width = img.width; let height = img.height;
+                    
+                    if (width > height) {
+                        if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+                    } else {
+                        if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+                    }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    currentBase64Image = canvas.toDataURL('image/jpeg', 0.6); // %60 kalite
+                    const preview = document.getElementById('image-preview');
+                    preview.src = currentBase64Image;
+                    preview.style.display = 'block';
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function savePhoto() {
+            if (!currentBase64Image) { alert("Lütfen önce bir fotoğraf seçin."); return; }
+            const title = document.getElementById('upload-title').value || "İsimsiz Eser";
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            let posts = JSON.parse(localStorage.getItem('posts'));
+
+            const newPost = {
+                id: Date.now(),
+                username: user.username,
+                image: currentBase64Image,
+                title: title,
+                date: new Date().toLocaleDateString()
+            };
+
+            try {
+                posts.push(newPost);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                document.getElementById('upload-msg').innerText = "Fotoğraf başarıyla yüklendi!";
+                setTimeout(() => { document.getElementById('upload-msg').innerText = ''; }, 3000);
+                
+                // Temizle
+                currentBase64Image = null;
+                document.getElementById('image-preview').style.display = 'none';
+                document.getElementById('upload-title').value = '';
+                document.getElementById('file-input').value = '';
+                
+                loadUserData(); // Galeriyi güncelle
+            } catch (e) {
+                alert("Hata: Depolama alanı doldu! Lütfen eski fotoğrafları silin.");
+            }
+        }
+
+        function createTicket() {
+            const subject = document.getElementById('ticket-subject').value;
+            const message = document.getElementById('ticket-message').value;
+            if(!subject || !message) { alert("Lütfen tüm alanları doldurun."); return; }
+
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            let tickets = JSON.parse(localStorage.getItem('tickets'));
+
+            tickets.push({
+                id: Date.now(),
+                username: user.username,
+                subject: subject,
+                message: message,
+                status: 'open',
+                reply: '',
+                date: new Date().toLocaleDateString()
+            });
+
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+            document.getElementById('ticket-subject').value = '';
+            document.getElementById('ticket-message').value = '';
+            alert("Talebiniz admin'e iletildi.");
+            loadUserData();
+        }
+
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            // 1. Kullanıcı Galerisini Yükle
+            const posts = JSON.parse(localStorage.getItem('posts')).filter(p => p.username === user.username);
+            const galleryGrid = document.getElementById('user-gallery-grid');
+            galleryGrid.innerHTML = posts.length === 0 ? '<p style="color:var(--text-muted)">Henüz fotoğraf yüklemedin.</p>' : '';
+            
+            posts.forEach(post => {
+                galleryGrid.innerHTML += `
+                    <div class="glass-card gallery-item">
+                        <img src="${post.image}" alt="img">
+                        <div class="item-info">
+                            <div><strong>${post.title}</strong><br><span class="item-author">${post.date}</span></div>
+                            <button class="glass-btn small danger" onclick="deletePost(${post.id})">Sil</button>
+                        </div>
+                    </div>`;
+            });
+
+            // 2. Kullanıcı Ticketlarını Yükle
+            const tickets = JSON.parse(localStorage.getItem('tickets')).filter(t => t.username === user.username);
+            const ticketList = document.getElementById('user-ticket-list');
+            ticketList.innerHTML = tickets.length === 0 ? '<p style="color:var(--text-muted)">Geçmiş talebiniz bulunmuyor.</p>' : '';
+            
+            tickets.reverse().forEach(ticket => {
+                const statusBadge = ticket.status === 'open' ? '<span class="badge open">Bekliyor</span>' : '<span class="badge closed">Yanıtlandı</span>';
+                const replyHTML = ticket.reply ? `<div class="ticket-reply"><strong>Admin Yanıtı:</strong> ${ticket.reply}</div>` : '';
+                
+                ticketList.innerHTML += `
+                    <div class="glass-card ticket-card ${ticket.status}">
+                        <div class="ticket-header">
+                            <strong>Konu: ${ticket.subject}</strong> ${statusBadge}
+                        </div>
+                        <p>${ticket.message}</p>
+                        ${replyHTML}
+                    </div>`;
+            });
+        }
+
+        // --- ADMİN İŞLEMLERİ ---
+        function switchAdminTab(tabId, btn) {
+            document.querySelectorAll('#admin-screen .tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#admin-screen .tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function loadAdminData() {
+            // 1. Kullanıcılar Tablosu
+            const users = JSON.parse(localStorage.getItem('users'));
+            const tbody = document.getElementById('admin-user-tbody');
+            tbody.innerHTML = '';
+            users.forEach(u => {
+                const actionBtn = u.role === 'admin' ? '-' : 
+                    `<button class="glass-btn small ${u.isBanned ? 'success' : 'danger'}" onclick="toggleBan('${u.username}')">
+                        ${u.isBanned ? 'Yasağı Kaldır' : 'Banla'}
+                    </button>`;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>@${u.username}</td>
+                        <td>${u.role.toUpperCase()}</td>
+                        <td style="color: ${u.isBanned ? 'var(--danger)' : 'var(--success)'}">${u.isBanned ? 'Banlı' : 'Aktif'}</td>
+                        <td>${actionBtn}</td>
+                    </tr>`;
+            });
+
+            // 2. Tüm Fotoğraflar
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            const adminGallery = document.getElementById('admin-gallery-grid');
+            adminGallery.innerHTML = posts.length === 0 ? '<p>Sistemde fotoğraf yok.</p>' : '';
+            posts.forEach(post => {
+                adminGallery.innerHTML += `
+                    <div class="glass-card gallery-item">
+                        <img src="${post.image}" alt="img">
+                        <div class="item-info">
+                            <div><strong>${post.title}</strong><br><span class="item-author">Sahibi: @${post.username}</span></div>
+                            <button class="glass-btn small danger" onclick="deletePost(${post.id})">Sil</button>
+                        </div>
+                    </div>`;
+            });
+
+            // 3. Şikayetler (Tickets)
+            const tickets = JSON.parse(localStorage.getItem('tickets'));
+            const adminTicketList = document.getElementById('admin-ticket-list');
+            adminTicketList.innerHTML = tickets.length === 0 ? '<p>Açık şikayet yok.</p>' : '';
+            tickets.reverse().forEach(ticket => {
+                const statusBadge = ticket.status === 'open' ? '<span class="badge open">Açık</span>' : '<span class="badge closed">Kapalı</span>';
+                
+                let replySection = '';
+                if(ticket.status === 'open') {
+                    replySection = `
+                        <div style="margin-top: 15px; display:flex; gap:10px;">
+                            <input type="text" id="reply-${ticket.id}" placeholder="Kullanıcıya yanıt yazın...">
+                            <button class="glass-btn small primary" onclick="replyTicket(${ticket.id})">Yanıtla & Kapat</button>
+                        </div>`;
+                } else {
+                    replySection = `<div class="ticket-reply"><strong>Verilen Yanıt:</strong> ${ticket.reply}</div>`;
+                }
+
+                adminTicketList.innerHTML += `
+                    <div class="glass-card ticket-card ${ticket.status}">
+                        <div class="ticket-header">
+                            <span><strong>Gönderen:</strong> @${ticket.username} | <strong>Konu:</strong> ${ticket.subject}</span>
+                            ${statusBadge}
+                        </div>
+                        <p>${ticket.message}</p>
+                        ${replySection}
+                    </div>`;
+            });
+        }
+
+        // Ortak ve Admin Silme/Ban İşlemleri
+        function deletePost(id) {
+            if(!confirm("Bu fotoğrafı silmek istediğinize emin misiniz?")) return;
+            let posts = JSON.parse(localStorage.getItem('posts'));
+            posts = posts.filter(p => p.id !== id);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadUserData(); // Eğer kullanıcı ekranındaysa
+            loadAdminData(); // Eğer admin ekranındaysa
+        }
+
+        function toggleBan(username) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            const userIndex = users.findIndex(u => u.username === username);
+            if(userIndex > -1) {
+                users[userIndex].isBanned = !users[userIndex].isBanned;
+                localStorage.setItem('users', JSON.stringify(users));
+                loadAdminData();
+            }
+        }
+
+        function replyTicket(id) {
+            const replyText = document.getElementById(`reply-${id}`).value;
+            if(!replyText) { alert("Lütfen bir yanıt yazın."); return; }
+            
+            let tickets = JSON.parse(localStorage.getItem('tickets'));
+            const index = tickets.findIndex(t => t.id === id);
+            if(index > -1) {
+                tickets[index].reply = replyText;
+                tickets[index].status = 'closed';
+                localStorage.setItem('tickets', JSON.stringify(tickets));
+                loadAdminData();
+            }
+        }
+
+        // Uygulamayı Başlat
+        window.onload = loadApplication;
+    </script>
 </body>
 </html>
